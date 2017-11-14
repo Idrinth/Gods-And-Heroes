@@ -7,4 +7,5 @@ public interface Alignment {
     public int getDestruction();
     public int getHonesty();
     public int getFalsehood();
+    public void merge(Alignment alignment);
 }
