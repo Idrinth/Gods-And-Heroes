@@ -1,8 +1,5 @@
 package de.idrinth.gods_and_heroes;
 
-import de.idrinth.gods_and_heroes.services.TaskHandler;
-import de.idrinth.gods_and_heroes.implementation.Player;
-import java.util.Timer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
