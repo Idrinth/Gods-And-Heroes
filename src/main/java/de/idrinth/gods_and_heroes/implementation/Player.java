@@ -110,7 +110,6 @@ public class Player implements God {
                         BigDecimal.ONE.add(getLevel().pow(2)).multiply(BigDecimal.valueOf(100))
                 )
         );
-        System.out.println(level);
     }
 
     @Override
