@@ -57,23 +57,20 @@ public class Philosophy implements Alignment {
 
     @Override
     public final void merge(Alignment alignment) {
-        BigDecimal ci = calculateGroup(collectivism, alignment.getCollectivism(), individuality, alignment.getIndividuality());
-        BigDecimal cd = calculateGroup(creation, alignment.getCreation(), destruction, alignment.getDestruction());
-        BigDecimal fh = calculateGroup(falsehood, alignment.getFalsehood(), honesty, alignment.getHonesty());
+        collectivism = collectivism.add(alignment.getCollectivism());
+        individuality = individuality.add(alignment.getIndividuality()); 
+        collectivism = getPositive(collectivism.subtract(individuality));
+        individuality = getPositive(individuality.subtract(collectivism));
         
-        collectivism = getPositive(ci);
-        individuality = getPositive(ci.negate());
+        creation = creation.add(alignment.getCreation());
+        destruction = destruction.add(alignment.getDestruction()); 
+        creation = getPositive(creation.subtract(individuality));
+        destruction = getPositive(destruction.subtract(creation));
         
-        creation = getPositive(cd);
-        destruction = getPositive(cd.negate());
-        
-        falsehood = getPositive(fh);
-        honesty = getPositive(fh.negate());
-    }
-    private BigDecimal calculateGroup(BigDecimal element1old, BigDecimal element1new, BigDecimal element2new, BigDecimal element2old) {
-        BigDecimal element1 = element1old.add(element1new);
-        BigDecimal element2 = element2old.add(element2new);
-        return element1.subtract(element2);
+        falsehood = falsehood.add(alignment.getFalsehood());
+        honesty = honesty.add(alignment.getHonesty()); 
+        falsehood = getPositive(falsehood.subtract(honesty));
+        honesty = getPositive(honesty.subtract(falsehood));
     }
     private BigDecimal getPositive(BigDecimal value) {
         return value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value;
