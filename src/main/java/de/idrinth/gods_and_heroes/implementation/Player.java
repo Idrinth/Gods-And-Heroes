@@ -7,7 +7,9 @@ import de.idrinth.gods_and_heroes.interfaces.Hero;
 import de.idrinth.gods_and_heroes.interfaces.Mortal;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
-import de.idrinth.gods_and_heroes.services.Rounding;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -15,14 +17,17 @@ import java.util.function.Predicate;
 public class Player implements God {
 
     private final String name;
-    private double believe = 0;
-    private double renown = 0;
-    private double level = 1;
-    private int souls = 1;
+    private BigDecimal believe = BigDecimal.ZERO;
+    private BigDecimal renown = BigDecimal.ZERO;
+    private BigDecimal level = BigDecimal.ONE;
+    private BigDecimal souls = BigDecimal.ONE;
     private final Alignment alignment;
     private final ArrayList<Hero> heroes = new ArrayList<>();
     private final ArrayList<Priest> priests = new ArrayList<>();
     private final ArrayList<Believer> believers = new ArrayList<>();
+    
+    private final static MathContext FLOOR = new MathContext(1,RoundingMode.FLOOR);
+    private final static MathContext CEIL = new MathContext(1,RoundingMode.CEILING);
 
     public Player(String name, Alignment alignment) {
         this.name = name;
@@ -30,21 +35,22 @@ public class Player implements God {
     }
 
     @Override
-    public int getBelieve() {
-        return (int) Rounding.floor(believe);
+    public BigDecimal getBelieve() {
+        return believe.round(FLOOR);
     }
 
     @Override
-    public int getRenown() {
-        return (int) Rounding.ceil(renown);
+    public BigDecimal getRenown() {
+        return renown.round(CEIL);
     }
 
     @Override
     public boolean createWonder(Wonder wonder) {
-        if (believe < wonder.getBelieveCost()) {
+        if (believe.compareTo(wonder.getBelieveCost()) < 0) {
             return false;
         }
-        renown += wonder.getRenownReward();
+        believe = believe.subtract(wonder.getBelieveCost());
+        renown = renown.add(wonder.getRenownReward());
         alignment.merge(wonder.getAlignmentShift());
         return true;
     }
@@ -61,7 +67,7 @@ public class Player implements God {
 
     @Override
     public Alignment getAlignment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return alignment;
     }
 
     @Override
@@ -70,40 +76,46 @@ public class Player implements God {
     }
 
     @Override
-    public int getLevel() {
-        return (int) Rounding.floor(level);
+    public BigDecimal getLevel() {
+        System.out.println(level.round(FLOOR));
+        return level.round(FLOOR);
     }
 
     @Override
     public void processIdle() {
-        believe += 0.00001 * souls;
-        renown -= 0.00001;
+        believe = believe.add(BigDecimal.valueOf(0.00001).multiply(souls));
+        renown = renown.subtract(BigDecimal.valueOf(0.00001));
         heroes.removeIf(new DeadCheck());
         for (Hero hero : heroes) {
-            believe += 0.001;
-            renown += hero.getLevel() / 100;
+            believe = believe.add(BigDecimal.valueOf(0.001));
+            renown = renown.add(hero.getLevel().divide(BigDecimal.valueOf(100)));
         }
         priests.removeIf(new DeadCheck());
         for (Priest priest : priests) {
-            believe -= 0.1;
-            renown += priest.getLevel() / 100000;
+            believe = believe.subtract(BigDecimal.valueOf(0.1));
+            renown = renown.add(priest.getLevel().divide(BigDecimal.valueOf(10000)));
             //chance to add new believer
         }
         believers.removeIf(new LeavingCheck());
         believers.removeIf(new DeadCheck());
-        believe += 0.00025*believers.size();
-        renown = renown < 0 ? 0 : renown;
-        believe = believe < 0 ? 0 : believe;
+        believe = believe.add(BigDecimal.valueOf(0.00025).multiply(BigDecimal.valueOf(believers.size())));
+        renown = renown.max(BigDecimal.ZERO);
+        believe = believe.max(BigDecimal.ZERO);
     }
 
     @Override
-    public void addExperience(int experience) {
-        level += experience / (100 + 100 * Math.pow(getLevel(), 1.5));
+    public void addExperience(BigDecimal experience) {
+        level = level.add(
+                experience.divide(
+                        BigDecimal.ONE.add(getLevel().pow(2)).multiply(BigDecimal.valueOf(100))
+                )
+        );
+        System.out.println(level);
     }
 
     @Override
     public List<Believer> getBelievers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return believers;
     }
     private class DeadCheck implements Predicate<Mortal> {
         @Override
@@ -111,9 +123,9 @@ public class Player implements God {
             if(!t.isDead()) {
                 return false;
             }
-            believe += t.getOnDeathBelieve();
-            renown += t.getOnDeathRenown();
-            souls += t.getOnDeathSouls();
+            believe = believe.add(t.getOnDeathBelieve());
+            renown = renown.add(t.getOnDeathRenown());
+            souls = souls.add(t.getOnDeathSouls());
             return true;
         }
     }
