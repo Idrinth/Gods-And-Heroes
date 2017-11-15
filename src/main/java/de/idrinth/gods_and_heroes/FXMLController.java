@@ -1,6 +1,6 @@
 package de.idrinth.gods_and_heroes;
 
-import java.awt.TextField;
+import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -16,8 +16,6 @@ public class FXMLController implements Initializable {
 	
     private final Timer timer = new Timer(true);
     
-    @FXML
-    private Label label;
     @FXML
     private TextField textfield;
     
