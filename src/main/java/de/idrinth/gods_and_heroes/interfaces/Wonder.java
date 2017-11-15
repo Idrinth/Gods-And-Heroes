@@ -1,7 +1,9 @@
 package de.idrinth.gods_and_heroes.interfaces;
 
+import java.math.BigDecimal;
+
 public interface Wonder {
     public Alignment getAlignmentShift();
-    public int getBelieveCost();
-    public int getRenownReward();
+    public BigDecimal getBelieveCost();
+    public BigDecimal getRenownReward();
 }
