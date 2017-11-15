@@ -74,7 +74,7 @@ public class Philosophy implements Alignment {
         collectivism = getPositive(ci);
         individuality = getPositive(ci.negate());
 
-        BigDecimal cd = creation.subtract(individuality);
+        BigDecimal cd = creation.subtract(destruction);
         creation = getPositive(cd);
         destruction = getPositive(cd.negate());
 
