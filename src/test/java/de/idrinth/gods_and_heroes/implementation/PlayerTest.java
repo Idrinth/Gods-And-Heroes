@@ -12,10 +12,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
-    
-    public PlayerTest() {
-    }
-
     @Test
     public void testGetBelieve() {
         System.out.println("getBelieve");
