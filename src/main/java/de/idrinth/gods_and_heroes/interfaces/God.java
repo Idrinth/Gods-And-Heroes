@@ -1,7 +1,13 @@
 package de.idrinth.gods_and_heroes.interfaces;
 
-public interface God extends Person{
-    public int getBelieve();
-    public int getRenown();
+import java.math.BigDecimal;
+import java.util.List;
+
+public interface God extends Individual {
+    public BigDecimal getBelieve();
+    public List<Believer> getBelievers();
+    public BigDecimal getRenown();
     public boolean createWonder(Wonder wonder);
+    public List<Hero> getHeroes();
+    public List<Priest> getPriests();
 }

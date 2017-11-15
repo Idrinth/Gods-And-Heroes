@@ -1,5 +1,8 @@
 package de.idrinth.gods_and_heroes;
 
+import de.idrinth.gods_and_heroes.services.TaskHandler;
+import de.idrinth.gods_and_heroes.implementation.Player;
+import java.util.Timer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +12,7 @@ import javafx.stage.Stage;
 
 
 public class MainApp extends Application {
-
+    private final Timer timer = new Timer(true);
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
@@ -20,6 +23,8 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
+
+        timer.scheduleAtFixedRate(new TaskHandler(new Player("unnamed",null)), 0, 1000);
     }
 
     /**
