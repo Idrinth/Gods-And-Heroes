@@ -8,7 +8,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.FXMLController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Label layoutX="100" layoutY="50" text="Choose a name for your God:" minHeight="16" minWidth="69" fx:id="label" />
+    	<TextField layoutX="100" layoutY="70" fx:id="textfield" />
+        <Button layoutX="100" layoutY="120" text="Confirm" onAction="#handleButtonAction" fx:id="button" />
     </children>
 </AnchorPane>

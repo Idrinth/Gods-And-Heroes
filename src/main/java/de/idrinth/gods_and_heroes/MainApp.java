@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 
 public class MainApp extends Application {
-    private final Timer timer = new Timer(true);
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
@@ -23,10 +22,8 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
-
-        timer.scheduleAtFixedRate(new TaskHandler(new Player("unnamed",null)), 0, 1000);
     }
-
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be
