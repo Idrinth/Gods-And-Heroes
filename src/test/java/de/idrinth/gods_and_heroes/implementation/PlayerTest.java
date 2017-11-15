@@ -29,7 +29,6 @@ public class PlayerTest {
         Player instance = new Player("Test", new EmptyAlignment());
         assertTrue(BigDecimal.ZERO.equals(instance.getRenown()));
         assertTrue(instance.createWonder(new EmptyWonder(0,100)));
-        System.out.println(instance.getRenown());
         assertTrue(BigDecimal.valueOf(100).compareTo(instance.getRenown()) == 0);
         assertFalse(instance.createWonder(new EmptyWonder(10,100)));
         assertTrue(BigDecimal.valueOf(100).compareTo(instance.getRenown()) == 0);

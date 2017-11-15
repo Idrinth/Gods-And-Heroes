@@ -52,6 +52,7 @@ public class Player implements God {
         believe = believe.subtract(wonder.getBelieveCost());
         renown = renown.add(wonder.getRenownReward());
         alignment.merge(wonder.getAlignmentShift());
+        addExperience(wonder.getBelieveCost().divide(BigDecimal.valueOf(100)));
         return true;
     }
 
@@ -77,7 +78,6 @@ public class Player implements God {
 
     @Override
     public BigDecimal getLevel() {
-        System.out.println(level.round(FLOOR));
         return level.round(FLOOR);
     }
 
