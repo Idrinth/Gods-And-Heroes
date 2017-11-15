@@ -18,7 +18,7 @@ public class Philosophy implements Alignment {
         this.destruction = destruction;
         this.falsehood = falsehood;
         this.honesty = honesty;
-        this.merge(new Philosophy());
+        this.adjust();
     }
 
     public Philosophy() {
@@ -58,20 +58,31 @@ public class Philosophy implements Alignment {
     @Override
     public final void merge(Alignment alignment) {
         collectivism = collectivism.add(alignment.getCollectivism());
-        individuality = individuality.add(alignment.getIndividuality()); 
-        collectivism = getPositive(collectivism.subtract(individuality));
-        individuality = getPositive(individuality.subtract(collectivism));
-        
+        individuality = individuality.add(alignment.getIndividuality());
+
         creation = creation.add(alignment.getCreation());
-        destruction = destruction.add(alignment.getDestruction()); 
-        creation = getPositive(creation.subtract(individuality));
-        destruction = getPositive(destruction.subtract(creation));
-        
+        destruction = destruction.add(alignment.getDestruction());
+
         falsehood = falsehood.add(alignment.getFalsehood());
-        honesty = honesty.add(alignment.getHonesty()); 
-        falsehood = getPositive(falsehood.subtract(honesty));
-        honesty = getPositive(honesty.subtract(falsehood));
+        honesty = honesty.add(alignment.getHonesty());
+
+        adjust();
     }
+
+    private void adjust() {
+        BigDecimal ci = collectivism.subtract(individuality);
+        collectivism = getPositive(ci);
+        individuality = getPositive(ci.negate());
+
+        BigDecimal cd = creation.subtract(individuality);
+        creation = getPositive(cd);
+        destruction = getPositive(cd.negate());
+
+        BigDecimal fh = falsehood.subtract(honesty);
+        falsehood = getPositive(fh);
+        honesty = getPositive(fh.negate());
+    }
+
     private BigDecimal getPositive(BigDecimal value) {
         return value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value;
     }
