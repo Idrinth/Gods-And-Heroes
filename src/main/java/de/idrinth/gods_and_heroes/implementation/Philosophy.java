@@ -57,18 +57,25 @@ public class Philosophy implements Alignment {
 
     @Override
     public final void merge(Alignment alignment) {
-        BigDecimal ci = collectivism.add(alignment.getCollectivism()).subtract(individuality).subtract(alignment.getIndividuality());
-        BigDecimal cd = creation.add(alignment.getCreation()).subtract(destruction).subtract(alignment.getDestruction());
-        BigDecimal fh = falsehood.add(alignment.getFalsehood()).subtract(honesty).subtract(alignment.getHonesty());
+        BigDecimal ci = calculateGroup(collectivism, alignment.getCollectivism(), individuality, alignment.getIndividuality());
+        BigDecimal cd = calculateGroup(creation, alignment.getCreation(), destruction, alignment.getDestruction());
+        BigDecimal fh = calculateGroup(falsehood, alignment.getFalsehood(), honesty, alignment.getHonesty());
         
-        collectivism = ci.compareTo(BigDecimal.ZERO) < 0?BigDecimal.ZERO:ci;
-        individuality = ci.compareTo(BigDecimal.ZERO) > 0?BigDecimal.ZERO:ci.negate();
+        collectivism = getPositive(ci);
+        individuality = getPositive(ci.negate());
         
-        creation = cd.compareTo(BigDecimal.ZERO) < 0?BigDecimal.ZERO:cd;
-        destruction = cd.compareTo(BigDecimal.ZERO) > 0?BigDecimal.ZERO:cd.negate();
+        creation = getPositive(cd);
+        destruction = getPositive(cd.negate());
         
-        falsehood = fh.compareTo(BigDecimal.ZERO) < 0?BigDecimal.ZERO:fh;
-        honesty = fh.compareTo(BigDecimal.ZERO) > 0?BigDecimal.ZERO:fh.negate();
-        
+        falsehood = getPositive(fh);
+        honesty = getPositive(fh.negate());
+    }
+    private BigDecimal calculateGroup(BigDecimal element1old, BigDecimal element1new, BigDecimal element2new, BigDecimal element2old) {
+        BigDecimal element1 = element1old.add(element1new);
+        BigDecimal element2 = element2old.add(element2new);
+        return element1.subtract(element2);
+    }
+    private BigDecimal getPositive(BigDecimal value) {
+        return value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value;
     }
 }
