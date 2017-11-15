@@ -14,10 +14,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TaskHandlerTest {
-    
-    public TaskHandlerTest() {
-    }
-
     @Test
     public void testRun() {
         System.out.println("run");
