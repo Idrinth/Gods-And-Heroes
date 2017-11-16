@@ -21,6 +21,7 @@ public class ModifiableObservablePersonListTest {
         assertEquals(0, instance.size());
         instance.add(new PersonMock());
         assertEquals(1, instance.size());
+        assertNotNull(instance.set(0, new PersonMock()));
         instance.remove(0);
         assertEquals(0, instance.size());
     }
