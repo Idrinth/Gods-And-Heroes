@@ -231,11 +231,6 @@ public class PlayerTest {
         }
 
         @Override
-        public void addTask(Wonder wonder) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
         public God getGod() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }

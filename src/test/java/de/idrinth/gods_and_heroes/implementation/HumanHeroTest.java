@@ -1,32 +1,35 @@
-package de.idrinth.gods_and_heroes.services;
+package de.idrinth.gods_and_heroes.implementation;
 
-import de.idrinth.gods_and_heroes.implementation.ModifiableObservablePersonList;
 import de.idrinth.gods_and_heroes.interfaces.Alignment;
 import de.idrinth.gods_and_heroes.interfaces.Believer;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import de.idrinth.gods_and_heroes.interfaces.Hero;
+import de.idrinth.gods_and_heroes.interfaces.Option;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Quest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
 import java.math.BigDecimal;
+import java.util.List;
 import javafx.collections.ObservableList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TaskHandlerTest {
+public class HumanHeroTest {
     @Test
-    public void testRun() {
-        System.out.println("run");
-        TaskedCreature creature = new TaskedCreature();
-        TaskHandler instance = new TaskHandler(creature);
-        instance.run();
-        assertEquals(3, creature.ran());
+    public void testAddTask() {
+        System.out.println("addTask + processIdle");
+        HumanHero instance = new HumanHero(new MockGod());
+        MockTask task = new MockTask();
+        instance.addTask(task);
+        instance.processIdle();
+        assertFalse(task.isDone());
+        task.setReady();
+        instance.addTask(task);
+        instance.processIdle();
+        assertTrue(task.isDone());
     }
-    private class TaskedCreature implements God,Priest,Hero {
-        private int wasRun = 0;
-        public int ran() {
-            return wasRun;
-        }
+    private class MockGod implements God {
+
         @Override
         public BigDecimal getBelieve() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -49,16 +52,12 @@ public class TaskHandlerTest {
 
         @Override
         public ObservableList<Hero> getHeroes() {
-            ModifiableObservablePersonList<Hero> l = new ModifiableObservablePersonList<>();
-            l.add(this);
-            return l;
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
         public ObservableList<Priest> getPriests() {
-            ModifiableObservablePersonList<Priest> l = new ModifiableObservablePersonList<>();
-            l.add(this);
-            return l;
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
@@ -83,38 +82,52 @@ public class TaskHandlerTest {
 
         @Override
         public void processIdle() {
-            wasRun++;
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-
+        
+    }
+    private class MockTask implements Quest {
+        private final BigDecimal cost = BigDecimal.ONE;
+        private boolean ready = false;
+        private BigDecimal progress = BigDecimal.ZERO;
         @Override
-        public God getGod() {
+        public BigDecimal getRenownReward() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public BigDecimal getOnDeathRenown() {
+        public List<Option> getOptions() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public BigDecimal getOnDeathSouls() {
+        public void chooseOption(Option option) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public BigDecimal getOnDeathBelieve() {
+        public Option getChosenOption() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public boolean isDead() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public boolean isReady() {
+            return ready;
+        }
+
+        public void setReady() {
+            ready = true;
         }
 
         @Override
-        public void addTask(Quest quest) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public boolean addProgress(BigDecimal amount) {
+            progress = progress.add(amount);
+            return isDone();
         }
-    
-}
+
+        @Override
+        public boolean isDone() {
+            return progress.compareTo(cost) >= 0;
+        }
+    }
 }

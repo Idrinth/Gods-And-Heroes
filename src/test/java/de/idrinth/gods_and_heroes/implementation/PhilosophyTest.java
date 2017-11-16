@@ -56,8 +56,12 @@ public class PhilosophyTest {
         assertTrue(BigDecimal.valueOf(96).compareTo(instance2.getDestruction()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance2.getFalsehood()) == 0);
         assertTrue(BigDecimal.valueOf(4).compareTo(instance2.getHonesty()) == 0);
-        
-        
+    }
+
+    @Test
+    public void testGetRandom() {
+        System.out.println("getRandom");
+        assertNotNull(Philosophy.getRandom());
     }
     
 }
