@@ -1,4 +1,4 @@
-package de.idrinth.gods_and_heroes;
+package de.idrinth.gods_and_heroes.ui;
 
 import de.idrinth.gods_and_heroes.implementation.Philosophy;
 import javafx.scene.control.TextField;
@@ -34,6 +34,26 @@ public class FXMLController implements Initializable {
         }
         tab.getTabs().get(0).setDisable(true);
         tab.getSelectionModel().clearAndSelect(1);
+    }
+
+    @FXML
+    private void createWonder() {
+        //todo
+    }
+
+    @FXML
+    private void begetHero(ActionEvent event) {
+        //todo
+    }
+
+    @FXML
+    private void proselytizeBeliever(ActionEvent event) {
+        //todo
+    }
+
+    @FXML
+    private void consecratePriest(ActionEvent event) {
+        //todo
     }
 
     @Override
