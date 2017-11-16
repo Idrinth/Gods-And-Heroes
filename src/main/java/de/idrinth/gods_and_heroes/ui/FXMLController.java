@@ -12,6 +12,7 @@ import de.idrinth.gods_and_heroes.services.TaskHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -31,6 +32,10 @@ public class FXMLController implements Initializable {
         timer.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
         for(Tab t:tab.getTabs()) {
             t.setDisable(false);
+            Node firstChild = t.getContent();
+            if(PersonTable.class.isInstance(firstChild)) {
+                ((PersonTable) firstChild).setItems(god);
+            }
         }
         tab.getTabs().get(0).setDisable(true);
         tab.getSelectionModel().clearAndSelect(1);
@@ -57,5 +62,7 @@ public class FXMLController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) {
+        //No need to do anything here for now
+    }
 }

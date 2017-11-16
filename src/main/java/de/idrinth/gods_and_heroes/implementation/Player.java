@@ -10,9 +10,8 @@ import de.idrinth.gods_and_heroes.interfaces.Wonder;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
+import javafx.collections.ObservableList;
 
 public class Player implements God {
 
@@ -22,9 +21,9 @@ public class Player implements God {
     private BigDecimal level = BigDecimal.ONE;
     private BigDecimal souls = BigDecimal.ONE;
     private final Alignment alignment;
-    private final ArrayList<Hero> heroes = new ArrayList<>();
-    private final ArrayList<Priest> priests = new ArrayList<>();
-    private final ArrayList<Believer> believers = new ArrayList<>();
+    private final ObservableList<Hero> heroes = new ModifiableObservablePersonList<>();
+    private final ObservableList<Priest> priests = new ModifiableObservablePersonList<>();
+    private final ObservableList<Believer> believers = new ModifiableObservablePersonList<>();
     
     private final static MathContext FLOOR = new MathContext(1,RoundingMode.FLOOR);
     private final static MathContext CEIL = new MathContext(1,RoundingMode.CEILING);
@@ -57,12 +56,12 @@ public class Player implements God {
     }
 
     @Override
-    public List<Hero> getHeroes() {
+    public ObservableList<Hero> getHeroes() {
         return heroes;
     }
 
     @Override
-    public List<Priest> getPriests() {
+    public ObservableList<Priest> getPriests() {
         return priests;
     }
 
@@ -113,7 +112,7 @@ public class Player implements God {
     }
 
     @Override
-    public List<Believer> getBelievers() {
+    public ObservableList<Believer> getBelievers() {
         return believers;
     }
     private class DeadCheck implements Predicate<Mortal> {
