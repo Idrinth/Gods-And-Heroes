@@ -4,16 +4,17 @@ import de.idrinth.gods_and_heroes.interfaces.Alignment;
 import de.idrinth.gods_and_heroes.interfaces.Mortal;
 import de.idrinth.gods_and_heroes.services.NameCreator;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 abstract class Servant implements Mortal {
     protected BigDecimal level = BigDecimal.ONE;
-    protected abstract BigDecimal getDeathFactor();
     protected BigDecimal age = BigDecimal.ZERO;
     protected boolean isDead = false;
     protected Alignment alignment = Philosophy.getRandom();
     protected final String name = NameCreator.generate();
+
+    protected abstract BigDecimal getDeathFactor();
+
     @Override
     public BigDecimal getOnDeathRenown() {
         return BigDecimal.valueOf(5).multiply(getDeathFactor());
