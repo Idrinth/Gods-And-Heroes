@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import de.idrinth.gods_and_heroes.ui.BelieverTable?>
+<?import de.idrinth.gods_and_heroes.ui.HeroTable?>
+<?import de.idrinth.gods_and_heroes.ui.PriestTable?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.FXMLController">
-    <children>
-        <Label layoutX="100" layoutY="50" text="Choose a name for your God:" minHeight="16" minWidth="69" fx:id="label" />
-        <TextField layoutX="100" layoutY="70" fx:id="textfield" />
-        <Button layoutX="100" layoutY="120" text="Confirm" onAction="#handleButtonAction" fx:id="button" />
-    </children>
-</AnchorPane>
+<TabPane fx:id="tab" tabClosingPolicy="UNAVAILABLE" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.ui.FXMLController">
+    <tabs>
+        <Tab text="Setup">
+            <AnchorPane>
+                <children>
+                    <Label layoutX="100" layoutY="50" text="Choose a name for your God:" minHeight="16" minWidth="69"/>
+                    <TextField layoutX="100" layoutY="70" fx:id="textfield" />
+                    <Button layoutX="100" layoutY="120" text="Confirm" onAction="#startGame"/>
+                </children>
+            </AnchorPane>
+        </Tab>
+        <Tab text="Game" disable="true">
+            <AnchorPane>
+                <children>
+                    <Button layoutX="100" layoutY="60" text="Create Wonder" onAction="#createWonder"/>
+                    <Button layoutX="100" layoutY="90" text="Beget Hero" onAction="#begetHero"/>
+                    <Button layoutX="100" layoutY="120" text="Proselytize Believer" onAction="#proselytizeBeliever"/>
+                    <Button layoutX="100" layoutY="150" text="Consecrate Priest" onAction="#consecratePriest"/>
+                </children>
+            </AnchorPane>
+        </Tab>
+        <Tab text="Believers" disable="true">
+            <BelieverTable></BelieverTable>
+        </Tab>
+        <Tab text="Heroes" disable="true">
+            <HeroTable></HeroTable>
+        </Tab>
+        <Tab text="Priests" disable="true">
+            <PriestTable></PriestTable>
+        </Tab>
+    </tabs>
+</TabPane>
