@@ -16,14 +16,14 @@ public class PlayerTest {
     public void testGetBelieve() {
         System.out.println("getBelieve");
         Player instance = new Player("Test", new EmptyAlignment());
-        assertTrue(BigDecimal.ZERO.equals(instance.getBelieve()));
+        assertTrue(BigDecimal.ZERO.compareTo(instance.getBelieve()) == 0);
     }
 
     @Test
     public void testGetRenown() {
         System.out.println("getRenown");
         Player instance = new Player("Test", new EmptyAlignment());
-        assertTrue(BigDecimal.ZERO.equals(instance.getRenown()));
+        assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
         assertTrue(instance.createWonder(new EmptyWonder(0,100)));
         assertTrue(BigDecimal.valueOf(100).compareTo(instance.getRenown()) == 0);
         assertFalse(instance.createWonder(new EmptyWonder(10,100)));
@@ -44,7 +44,7 @@ public class PlayerTest {
         System.out.println("getHeroes");
         Player instance = new Player("Test", new EmptyAlignment());
         assertEquals(0, instance.getHeroes().size());
-        instance.getHeroes().add(new EmptyHero());
+        instance.getHeroes().add(new EmptyCreature());
         assertEquals(1, instance.getHeroes().size());
     }
 
@@ -53,7 +53,7 @@ public class PlayerTest {
         System.out.println("getPriests");
         Player instance = new Player("Test", new EmptyAlignment());
         assertEquals(0, instance.getPriests().size());
-        instance.getPriests().add(new EmptyPriest());
+        instance.getPriests().add(new EmptyCreature());
         assertEquals(1, instance.getPriests().size());
     }
 
@@ -88,8 +88,52 @@ public class PlayerTest {
     }
 
     @Test
+    public void testProcessIdleDeath() {
+        //Hero
+        Player instance = new Player("Test", new EmptyAlignment());
+        instance.getHeroes().add(new EmptyCreature(true));
+        assertEquals(1, instance.getHeroes().size());
+        instance.processIdle();
+        assertTrue(BigDecimal.valueOf(10).compareTo(instance.getBelieve()) == 0);
+        assertTrue(BigDecimal.valueOf(3).compareTo(instance.getRenown()) == 0);
+        assertEquals(0, instance.getHeroes().size());
+        //Believer
+        Player instance2 = new Player("Test", new EmptyAlignment());
+        instance2.getBelievers().add(new EmptyCreature(true));
+        assertEquals(1, instance2.getBelievers().size());
+        instance2.processIdle();
+        assertTrue(BigDecimal.valueOf(10).compareTo(instance2.getBelieve()) == 0);
+        assertTrue(BigDecimal.valueOf(3).compareTo(instance2.getRenown()) == 0);
+        assertEquals(0, instance2.getBelievers().size());
+
+        Player instance4 = new Player("Test", new EmptyAlignment());
+        instance4.getBelievers().add(new EmptyCreature(false, true));
+        assertEquals(1, instance4.getBelievers().size());
+        instance4.processIdle();
+        assertTrue(BigDecimal.ZERO.compareTo(instance4.getBelieve()) == 0);
+        assertTrue(BigDecimal.ZERO.compareTo(instance4.getRenown()) == 0);
+        assertEquals(0, instance4.getBelievers().size());
+
+        Player instance3 = new Player("Test", new EmptyAlignment());
+        instance3.getBelievers().add(new EmptyCreature(true, true));
+        assertEquals(1, instance3.getBelievers().size());
+        instance3.processIdle();
+        assertTrue(BigDecimal.ZERO.compareTo(instance3.getBelieve()) == 0);
+        assertTrue(BigDecimal.ZERO.compareTo(instance3.getRenown()) == 0);
+        assertEquals(0, instance3.getBelievers().size());
+        //Priest
+        Player instance5 = new Player("Test", new EmptyAlignment());
+        instance5.getPriests().add(new EmptyCreature(true));
+        assertEquals(1, instance5.getPriests().size());
+        instance5.processIdle();
+        assertTrue(BigDecimal.TEN.compareTo(instance5.getBelieve()) == 0);
+        assertTrue(BigDecimal.valueOf(3).compareTo(instance5.getRenown()) == 0);
+        assertEquals(0, instance5.getPriests().size());
+    }
+    @Test
     public void testProcessIdle() {
         System.out.println("processIdle");
+        //Empty
         Player instance = new Player("Test", new EmptyAlignment());
         assertTrue(BigDecimal.ZERO.compareTo(instance.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
@@ -98,6 +142,30 @@ public class PlayerTest {
         }
         assertTrue(BigDecimal.ONE.compareTo(instance.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
+        //Believers
+        Player instance4 = new Player("Test", new EmptyAlignment());
+        instance4.getBelievers().add(new EmptyCreature());
+        for(int i=0;i<100000;i++) {
+            instance4.processIdle();
+        }
+        assertTrue(BigDecimal.valueOf(26).compareTo(instance4.getBelieve()) == 0);
+        assertTrue(BigDecimal.ZERO.compareTo(instance4.getRenown()) == 0);
+        //Heroes
+        Player instance2 = new Player("Test", new EmptyAlignment());
+        instance2.getHeroes().add(new EmptyCreature());
+        for(int i=0;i<1000;i++) {
+            instance2.processIdle();
+        }
+        assertTrue(BigDecimal.ONE.compareTo(instance2.getBelieve()) == 0);
+        assertTrue(BigDecimal.TEN.compareTo(instance2.getRenown()) == 0);
+        //Priests
+        Player instance3 = new Player("Test", new EmptyAlignment());
+        instance3.getPriests().add(new EmptyCreature());
+        for(int i=0;i<10000;i++) {
+            instance3.processIdle();
+        }
+        assertTrue(BigDecimal.ZERO.compareTo(instance3.getBelieve()) == 0);
+        assertTrue(BigDecimal.ONE.compareTo(instance3.getRenown()) == 0);
     }
 
     @Test
@@ -105,34 +173,46 @@ public class PlayerTest {
         System.out.println("getBelievers");
         Player instance = new Player("Test", new EmptyAlignment());
         assertEquals(0, instance.getBelievers().size());
-        instance.getBelievers().add(new EmptyBeliever());
+        instance.getBelievers().add(new EmptyCreature());
         assertEquals(1, instance.getBelievers().size());
     }
-    private class EmptyBeliever implements Believer {
-
+    private class EmptyCreature implements Believer,Priest,Hero {
+        private final boolean isDead;
+        private final boolean isLeaving;
+        public EmptyCreature() {
+            this(false);
+        }
+        public EmptyCreature(boolean isDead) {
+            this(isDead, false);
+        }
+        public EmptyCreature(boolean isDead, boolean isLeaving) {
+            this.isDead = isDead;
+            this.isLeaving = isLeaving;
+        }
+        
         @Override
         public boolean isLeaving() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return isLeaving;
         }
 
         @Override
         public BigDecimal getOnDeathRenown() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return BigDecimal.valueOf(3);
         }
 
         @Override
         public BigDecimal getOnDeathSouls() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return BigDecimal.ONE;
         }
 
         @Override
         public BigDecimal getOnDeathBelieve() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return BigDecimal.TEN;
         }
 
         @Override
         public boolean isDead() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return isDead;
         }
 
         @Override
@@ -149,8 +229,6 @@ public class PlayerTest {
         public void processIdle() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    }
-    private class EmptyPriest implements Priest {
 
         @Override
         public void addTask(Wonder wonder) {
@@ -163,104 +241,18 @@ public class PlayerTest {
         }
 
         @Override
-        public String getName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getLevel() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void processIdle() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void addExperience(BigDecimal experience) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Alignment getAlignment() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathRenown() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathSouls() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathBelieve() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean isDead() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-    private class EmptyHero implements Hero {
-        @Override
-        public void addTask(Quest quest) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public God getGod() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public String getName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
         public BigDecimal getLevel() {
             return BigDecimal.ONE;
         }
 
         @Override
-        public void processIdle() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
         public void addExperience(BigDecimal experience) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public Alignment getAlignment() {
+        public void addTask(Quest quest) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathRenown() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathSouls() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public BigDecimal getOnDeathBelieve() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean isDead() {
-            return false;
         }
     }
     private class EmptyWonder implements Wonder {

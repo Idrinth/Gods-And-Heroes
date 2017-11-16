@@ -8,7 +8,6 @@ import de.idrinth.gods_and_heroes.interfaces.Mortal;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +24,6 @@ public class Player implements God {
     private final ArrayList<Hero> heroes = new ArrayList<>();
     private final ArrayList<Priest> priests = new ArrayList<>();
     private final ArrayList<Believer> believers = new ArrayList<>();
-    
-    private final static MathContext FLOOR = new MathContext(1,RoundingMode.FLOOR);
-    private final static MathContext CEIL = new MathContext(1,RoundingMode.CEILING);
 
     public Player(String name, Alignment alignment) {
         this.name = name;
@@ -36,12 +32,12 @@ public class Player implements God {
 
     @Override
     public BigDecimal getBelieve() {
-        return believe.round(FLOOR);
+        return believe.setScale(0, RoundingMode.FLOOR);
     }
 
     @Override
     public BigDecimal getRenown() {
-        return renown.round(CEIL);
+        return renown.setScale(0, RoundingMode.CEILING);
     }
 
     @Override
@@ -78,7 +74,7 @@ public class Player implements God {
 
     @Override
     public BigDecimal getLevel() {
-        return level.round(FLOOR);
+        return level.setScale(0, RoundingMode.FLOOR);
     }
 
     @Override
