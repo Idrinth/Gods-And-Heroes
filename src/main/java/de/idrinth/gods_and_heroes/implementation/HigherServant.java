@@ -13,19 +13,16 @@ abstract class HigherServant extends Servant implements Priest {
     }
     @Override
     public BigDecimal getLevel() {
-        System.out.println(level);
-        System.out.println(level.setScale(0, RoundingMode.FLOOR));
         return level.setScale(0, RoundingMode.FLOOR);
     }
 
     @Override
     public void addExperience(BigDecimal experience) {
         level = level.add(
-                experience.divide(
-                        BigDecimal.ONE.add(getLevel().pow(2)).multiply(BigDecimal.valueOf(100)),
-                        10,
-                        RoundingMode.DOWN
-                )
+            divide(
+                experience,
+                BigDecimal.ONE.add(getLevel().pow(2)).multiply(BigDecimal.valueOf(100))
+            )
         );
     }
     

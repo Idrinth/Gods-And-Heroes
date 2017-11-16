@@ -13,13 +13,12 @@ public class NameCreatorTest {
 
     @Test
     public void testGenerateRandomness() {
-        System.out.println("generate");
+        System.out.println("generate - randomness check");
         HashSet<String> map = new HashSet<>();
         int found = 0;
         for(int i=0;i<1000;i++) {
             String result = NameCreator.generate();
-            found += map.contains(result)?1:0;
-            map.add(result);
+            found += map.add(result) ? 0 : 1;
         }
         assertTrue(found<10);
     }
