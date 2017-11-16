@@ -86,4 +86,14 @@ public class Philosophy implements Alignment {
     private BigDecimal getPositive(BigDecimal value) {
         return value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value;
     }
+    public static Alignment getRandom() {
+        return new Philosophy(
+            BigDecimal.valueOf(Math.random()*1000),
+            BigDecimal.valueOf(Math.random()*1000),
+            BigDecimal.valueOf(Math.random()*1000),
+            BigDecimal.valueOf(Math.random()*1000),
+            BigDecimal.valueOf(Math.random()*1000),
+            BigDecimal.valueOf(Math.random()*1000)
+        );
+    }
 }
