@@ -37,27 +37,25 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void createWonder() {
-        //todo
+    private void createWonder(ActionEvent event) {
+        System.out.println(god.getName()+" tries to create a wonder.");
     }
 
     @FXML
     private void begetHero(ActionEvent event) {
-        //todo
+        System.out.println(god.getName()+" tries to beget a hero.");
     }
 
     @FXML
     private void proselytizeBeliever(ActionEvent event) {
-        //todo
+        System.out.println(god.getName()+" tries to proselytize a believer.");
     }
 
     @FXML
     private void consecratePriest(ActionEvent event) {
-        //todo
+        System.out.println(god.getName()+" tries to consecrate a priest.");
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+    public void initialize(URL url, ResourceBundle rb) {}
 }
