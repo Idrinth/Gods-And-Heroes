@@ -6,6 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import de.idrinth.gods_and_heroes.ui.BelieverTable?>
+<?import de.idrinth.gods_and_heroes.ui.HeroTable?>
+<?import de.idrinth.gods_and_heroes.ui.PriestTable?>
 
 <TabPane fx:id="tab" tabClosingPolicy="UNAVAILABLE" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.ui.FXMLController">
     <tabs>
@@ -27,6 +30,15 @@
                     <Button layoutX="100" layoutY="150" text="Consecrate Priest" onAction="#consecratePriest"/>
                 </children>
             </AnchorPane>
+        </Tab>
+        <Tab text="Believers" disable="true">
+            <BelieverTable></BelieverTable>
+        </Tab>
+        <Tab text="Heroes" disable="true">
+            <HeroTable></HeroTable>
+        </Tab>
+        <Tab text="Priests" disable="true">
+            <PriestTable></PriestTable>
         </Tab>
     </tabs>
 </TabPane>
