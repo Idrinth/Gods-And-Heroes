@@ -1,5 +1,6 @@
 package de.idrinth.gods_and_heroes;
 
+import de.idrinth.gods_and_heroes.services.Game;
 import de.idrinth.gods_and_heroes.ui.FXMLController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 public class FXMLControllerTest extends ApplicationTest {
     @Test
     public void testInitialize() {
-        Assert.assertNotNull("Can't construct MainApp", new FXMLController());
+        Assert.assertNotNull("Can't construct FXMLController", new FXMLController());
     }
 
     @Override

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class GameTest {
     @Test
     public void testStartFresh() {
-        System.out.println("startFresh");
+        System.out.println("startFresh + end");
         God result = Game.startFresh("example");
         assertTrue(God.class.isInstance(result));
         assertEquals("example", result.getName());
