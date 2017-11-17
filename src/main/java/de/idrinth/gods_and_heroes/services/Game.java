@@ -10,7 +10,7 @@ public class Game implements GameHandler {
 
     public Game(String name) {
         this.god = new Player(name, new Philosophy());
-        timer.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
+        getTimer().scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
     }
 
     @Override
@@ -22,6 +22,12 @@ public class Game implements GameHandler {
     public void end() {
         timer.cancel();
         timer.purge();
+    }
+    private Scheduler getTimer() {
+        if(null==timer) {
+            setTimer(new TimerScheduler());
+        }
+        return timer;
     }
 
     public static void setTimer(Scheduler timerImpl) {

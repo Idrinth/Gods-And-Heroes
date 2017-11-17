@@ -1,7 +1,5 @@
 package de.idrinth.gods_and_heroes;
 
-import de.idrinth.gods_and_heroes.services.Game;
-import de.idrinth.gods_and_heroes.services.TimerScheduler;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +18,6 @@ public class MainApp extends Application {
         stage.setTitle("Gods & Heroes");
         stage.setScene(scene);
         stage.show();
-        Game.setTimer(new TimerScheduler());
     }
     
     /**
