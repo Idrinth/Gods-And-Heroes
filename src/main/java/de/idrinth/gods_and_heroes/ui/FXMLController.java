@@ -13,7 +13,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 public class FXMLController implements Initializable {
-    private GameHandler game;
+    public static GameHandler game;
 
     @FXML
     private TextField textfield;
@@ -27,7 +27,7 @@ public class FXMLController implements Initializable {
         if(textfield.getText().isEmpty()) {
             return;
         }
-        game = getGame(textfield.getText());
+        game = new Game(textfield.getText());
         for(Tab t:tab.getTabs()) {
             t.setDisable(!t.isDisable());
             if(PersonTable.class.isInstance(t.getContent())) {
@@ -35,9 +35,6 @@ public class FXMLController implements Initializable {
             }
         }
         tab.getSelectionModel().clearAndSelect(1);
-    }
-    protected GameHandler getGame(String text) {
-        return new Game(text);
     }
 
     @FXML
