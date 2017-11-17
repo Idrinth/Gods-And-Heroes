@@ -6,10 +6,12 @@ import static org.junit.Assert.*;
 
 public class GameTest {
     @Test
-    public void testStartFresh() {
+    public void testInitialize() {
         System.out.println("startFresh + end");
-        God result = Game.startFresh("example");
-        assertTrue(God.class.isInstance(result));
-        assertEquals("example", result.getName());
+        Game game = new Game("example");
+        assertTrue(God.class.isInstance(game.getGod()));
+        assertEquals("example", game.getGod().getName());
+        game.cancel();
+        game.purge();
     }
 }
