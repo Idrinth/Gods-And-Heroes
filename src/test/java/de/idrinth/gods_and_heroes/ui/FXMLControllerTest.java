@@ -29,11 +29,13 @@ public class FXMLControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
+        System.out.println("fx: start");
         Parent sceneRoot = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
         Scene scene = new Scene(sceneRoot, 1024, 768);
         stage.setScene(scene);
         stage.show();
         Game.setTimer(new TimelessScheduler());
+        System.out.println("fx: finished start");
     }
 
     @Test
