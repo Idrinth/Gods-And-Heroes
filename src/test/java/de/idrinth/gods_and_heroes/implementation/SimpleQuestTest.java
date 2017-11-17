@@ -9,10 +9,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SimpleQuestTest {
-    
-    public SimpleQuestTest() {
-    }
-
     @Test
     public void testGetRenownReward() {
         System.out.println("getRenownReward");
