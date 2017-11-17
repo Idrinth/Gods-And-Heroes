@@ -19,6 +19,7 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 public class FXMLControllerTest extends ApplicationTest {
     @Test
     public void testInitialize() {
+        System.out.println("initialize");
         Assert.assertNotNull("Can't construct FXMLController", new FXMLController());
     }
 
@@ -32,8 +33,8 @@ public class FXMLControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testBase() {
-        //Tabs
+    public void testTabs() {
+        System.out.println("fx: tabs");
         //Text
         verifyThat("#tab_setup", isNotNull());
         verifyThat("#tab_god", isNotNull());
@@ -42,8 +43,11 @@ public class FXMLControllerTest extends ApplicationTest {
         verifyThat("#tab_priest", isNotNull());
         //focus
         verifyThat("#tab_setup", isVisible());
+    }
 
-        //Buttons
+    @Test
+    public void testGameStart() {
+        System.out.println("fx: game start");
         //Existance
         verifyThat("#button_start", isNotNull());
         verifyThat("#textfield", isNotNull());

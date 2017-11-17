@@ -24,10 +24,6 @@ public class Game implements GameHandler {
         timer.purge();
     }
 
-    public static Scheduler getTimer() {
-        return timer;
-    }
-
     public static void setTimer(Scheduler timerImpl) {
         timer = timerImpl;
     }
