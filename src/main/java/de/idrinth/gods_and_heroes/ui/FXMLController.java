@@ -29,6 +29,9 @@ public class FXMLController implements Initializable {
     @FXML
     private void startGame(ActionEvent event) {
         event.consume();
+        if(textfield.getText().isEmpty()) {
+            return;
+        }
         god = new Player(textfield.getText(),new Philosophy());
         timer.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
         for(Tab t:tab.getTabs()) {

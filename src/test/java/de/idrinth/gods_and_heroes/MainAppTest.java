@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class MainAppTest {
-
     /**
      * Test of start method, of class MainApp.
      * @throws java.lang.NoSuchMethodException

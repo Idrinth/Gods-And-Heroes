@@ -12,16 +12,16 @@
 
 <TabPane fx:id="tab" tabClosingPolicy="UNAVAILABLE" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.ui.FXMLController">
     <tabs>
-        <Tab text="Setup">
+        <Tab text="Setup" fx:id="tab_setup">
             <AnchorPane>
                 <children>
                     <Label layoutX="100" layoutY="50" text="Choose a name for your God:" minHeight="16" minWidth="69"/>
                     <TextField layoutX="100" layoutY="70" fx:id="textfield" />
-                    <Button layoutX="100" layoutY="120" text="Confirm" onAction="#startGame"/>
+                    <Button layoutX="100" layoutY="120" text="Confirm" onAction="#startGame" fx:id="button_start"/>
                 </children>
             </AnchorPane>
         </Tab>
-        <Tab text="Game" disable="true">
+        <Tab text="God" disable="true" fx:id="tab_god">
             <AnchorPane>
                 <children>
                     <Button layoutX="100" layoutY="60" text="Create Wonder" onAction="#createWonder"/>
@@ -31,13 +31,13 @@
                 </children>
             </AnchorPane>
         </Tab>
-        <Tab text="Believers" disable="true">
+        <Tab text="Believers" disable="true" fx:id="tab_believer">
             <BelieverTable></BelieverTable>
         </Tab>
-        <Tab text="Heroes" disable="true">
+        <Tab text="Heroes" disable="true" fx:id="tab_hero">
             <HeroTable></HeroTable>
         </Tab>
-        <Tab text="Priests" disable="true">
+        <Tab text="Priests" disable="true" fx:id="tab_priest">
             <PriestTable></PriestTable>
         </Tab>
     </tabs>
