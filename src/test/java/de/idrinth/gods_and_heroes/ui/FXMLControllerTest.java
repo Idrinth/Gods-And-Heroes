@@ -1,5 +1,6 @@
 package de.idrinth.gods_and_heroes.ui;
 
+import de.idrinth.gods_and_heroes.services.Game;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class FXMLControllerTest extends ApplicationTest {
-
+    private Stage stage;
     @Test
     public void testInitialize() {
         Assert.assertNotNull("Can't construct FXMLController", new FXMLController());
@@ -23,10 +24,11 @@ public class FXMLControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         Parent sceneRoot = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
         Scene scene = new Scene(sceneRoot, 1024, 768);
-        stage.setScene(scene);
-        stage.show();
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     @Test
@@ -40,7 +42,7 @@ public class FXMLControllerTest extends ApplicationTest {
         verifyThat("#tab_priest", isNotNull());
         //focus
         verifyThat("#tab_setup", isVisible());
-        
+
         //Buttons
         //Existance
         verifyThat("#button_start", isNotNull());
@@ -54,6 +56,7 @@ public class FXMLControllerTest extends ApplicationTest {
         clickOn("#button_start", MouseButton.PRIMARY);
         //focus
         verifyThat("#tab_god", isVisible());
-        closeCurrentWindow();//look for a better solution
+
+        Game.g.end();
     }
 }
