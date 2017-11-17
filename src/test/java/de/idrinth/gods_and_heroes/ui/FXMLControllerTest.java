@@ -1,6 +1,7 @@
 package de.idrinth.gods_and_heroes.ui;
 
 import de.idrinth.gods_and_heroes.services.Game;
+import de.idrinth.gods_and_heroes.services.TimelessScheduler;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,6 @@ import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class FXMLControllerTest extends ApplicationTest {
-    private Stage stage;
     @Test
     public void testInitialize() {
         Assert.assertNotNull("Can't construct FXMLController", new FXMLController());
@@ -24,11 +24,11 @@ public class FXMLControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
         Parent sceneRoot = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
         Scene scene = new Scene(sceneRoot, 1024, 768);
-        this.stage.setScene(scene);
-        this.stage.show();
+        stage.setScene(scene);
+        stage.show();
+        Game.setTimer(new TimelessScheduler());
     }
 
     @Test
@@ -56,7 +56,5 @@ public class FXMLControllerTest extends ApplicationTest {
         clickOn("#button_start", MouseButton.PRIMARY);
         //focus
         verifyThat("#tab_god", isVisible());
-
-        Game.g.end();
     }
 }
