@@ -5,11 +5,22 @@ import de.idrinth.gods_and_heroes.implementation.Player;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import java.util.Timer;
 
-public class Game {
-    public static God startFresh(String name) {
-        Timer timer = new Timer(true);
-        God god = new Player(name, new Philosophy());
-        timer.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
+public class Game extends Timer implements GameHandler {
+    private final God god;
+
+    public Game(String name) {
+        super("base-game", true);
+        this.god = new Player(name, new Philosophy());
+        super.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
+    }
+
+    @Override
+    public God getGod() {
         return god;
+    }
+
+    public void end() {
+        cancel();
+        purge();
     }
 }
