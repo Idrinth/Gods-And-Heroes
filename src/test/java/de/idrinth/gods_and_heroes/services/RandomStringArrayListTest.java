@@ -1,5 +1,8 @@
 package de.idrinth.gods_and_heroes.services;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,6 +23,15 @@ public class RandomStringArrayListTest {
         }
         assertTrue(map.get("1")<600000);
         assertTrue(map.get("2")<600000);
+        
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        
+        instance = new RandomStringArrayList( list);
+        
+        instance = new RandomStringArrayList(10);
     }
     
 }
