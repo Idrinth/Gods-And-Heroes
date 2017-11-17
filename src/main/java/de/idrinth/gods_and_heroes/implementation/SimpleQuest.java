@@ -8,12 +8,10 @@ import java.util.List;
 public class SimpleQuest implements Quest {
     private final BigDecimal renown;
     private BigDecimal progress = BigDecimal.ZERO;
-    private final BigDecimal difficulty;
     private final List<Option> options;
 
-    public SimpleQuest(BigDecimal renown, BigDecimal difficulty, List<Option> options) {
+    public SimpleQuest(BigDecimal renown, List<Option> options) {
         this.renown = renown;
-        this.difficulty = difficulty;
         this.options = options;
     }
 
@@ -45,7 +43,7 @@ public class SimpleQuest implements Quest {
 
     @Override
     public boolean isDone() {
-         return progress.compareTo(difficulty) >= 0;
+         return progress.compareTo(renown.multiply(BigDecimal.TEN)) >= 0;
     }
 
     @Override
