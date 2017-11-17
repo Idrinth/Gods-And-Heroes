@@ -2,7 +2,6 @@ package de.idrinth.gods_and_heroes.implementation;
 
 import de.idrinth.gods_and_heroes.interfaces.Alignment;
 import de.idrinth.gods_and_heroes.interfaces.Option;
-import de.idrinth.gods_and_heroes.interfaces.Quest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class SimpleQuestTest {
     @Test
     public void testGetRenownReward() {
         System.out.println("getRenownReward");
-        assertTrue(BigDecimal.TEN.compareTo(get().getRenownReward()) == 0);
+        assertTrue(BigDecimal.ONE.compareTo(get().getRenownReward()) == 0);
     }
 
     @Test
@@ -51,27 +50,22 @@ public class SimpleQuestTest {
         instance.chooseOption(instance.getOptions().get(0));
         assertFalse(instance.isDone());
         instance.addProgress(BigDecimal.ONE);
+        assertFalse(instance.isDone());
+        instance.addProgress(BigDecimal.TEN);
         assertTrue(instance.isDone());
     }
 
     private SimpleQuest get() {
         List<Option> list = new ArrayList<>();
-        list.add(new OptionImpl("one"));
-        list.add(new OptionImpl("two"));
-        list.add(new OptionImpl("three"));
+        list.add(new OptionImpl());
+        list.add(new OptionImpl());
+        list.add(new OptionImpl());
         return new SimpleQuest(
-            BigDecimal.TEN,
             BigDecimal.ONE,
             list
         );
     }
     private class OptionImpl implements Option {
-        private final String title;
-
-        public OptionImpl(String title) {
-            this.title = title;
-        }
-
         @Override
         public Alignment getAlignmentShift() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -86,6 +80,5 @@ public class SimpleQuestTest {
         public String getTitle() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
     }
 }
