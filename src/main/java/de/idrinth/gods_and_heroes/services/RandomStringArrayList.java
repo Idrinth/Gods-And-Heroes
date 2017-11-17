@@ -10,11 +10,8 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 
 class RandomStringArrayList extends ArrayList<String> {
-
-    public RandomStringArrayList(int i) {
-        super(i);
-    }
     public RandomStringArrayList() {
+        super();
     }
     public RandomStringArrayList(Collection<? extends String> clctn) {
         super(clctn);
