@@ -21,6 +21,6 @@ public class TimelessScheduler implements Scheduler {
 
     @Override
     public void scheduleAtFixedRate(TimerTask task, long delay, long period) {
-        // not intended to do anything
+        task.cancel();
     }
 }
