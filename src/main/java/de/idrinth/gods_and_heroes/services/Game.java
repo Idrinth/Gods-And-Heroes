@@ -3,20 +3,14 @@ package de.idrinth.gods_and_heroes.services;
 import de.idrinth.gods_and_heroes.implementation.Philosophy;
 import de.idrinth.gods_and_heroes.implementation.Player;
 import de.idrinth.gods_and_heroes.interfaces.God;
-import java.util.Timer;
 
-public class Game extends Timer implements GameHandler {
-    public static Game g;
+public class Game implements GameHandler {
     private final God god;
+    private static Scheduler timer;
 
     public Game(String name) {
-        super("base-game", true);
         this.god = new Player(name, new Philosophy());
-        super.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
-        if(g != null) {
-            g.end();
-        }
-        g = this;
+        timer.scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
     }
 
     @Override
@@ -26,7 +20,15 @@ public class Game extends Timer implements GameHandler {
 
     @Override
     public void end() {
-        cancel();
-        purge();
+        timer.cancel();
+        timer.purge();
+    }
+
+    public static Scheduler getTimer() {
+        return timer;
+    }
+
+    public static void setTimer(Scheduler timerImpl) {
+        timer = timerImpl;
     }
 }
