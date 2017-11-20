@@ -28,11 +28,11 @@
 
     <dependencies>
         <!-- PROD -->
-    <dependency>
-        <groupId>de.idrinth</groupId>
-        <artifactId>random-name-generator</artifactId>
-        <version>1.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>de.idrinth</groupId>
+            <artifactId>random-name-generator</artifactId>
+            <version>1.1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
