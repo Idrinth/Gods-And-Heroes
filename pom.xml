@@ -19,20 +19,20 @@
         <name>Your Organisation</name>
     </organization>
 
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- PROD -->
-	<dependency>
-		<groupId>de.idrinth</groupId>
-		<artifactId>random-name-generator</artifactId>
-		<version>1.0.2</version>
-	</dependency>
+    <dependency>
+        <groupId>de.idrinth</groupId>
+        <artifactId>random-name-generator</artifactId>
+        <version>1.0.2</version>
+    </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
