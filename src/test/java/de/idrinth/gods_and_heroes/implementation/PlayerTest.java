@@ -148,7 +148,7 @@ public class PlayerTest {
         for(int i=0;i<100000;i++) {
             instance4.processIdle();
         }
-        assertTrue(BigDecimal.valueOf(26).compareTo(instance4.getBelieve()) == 0);
+        assertTrue(BigDecimal.valueOf(2501).compareTo(instance4.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance4.getRenown()) == 0);
         //Heroes
         Player instance2 = new Player("Test", new EmptyAlignment());
