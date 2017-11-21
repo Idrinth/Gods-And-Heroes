@@ -11,6 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assume.assumeFalse;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.framework.junit.ApplicationTest;
@@ -18,20 +19,23 @@ import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class FXMLControllerTest extends ApplicationTest {
+    @BeforeClass
+    public static void checkSystem() {
+        assumeFalse(
+            "Currently this test get's stuck in travis, so skipping it.",
+            System.getenv("TRAVIS") != null && System.getenv("TRAVIS").equals("true")
+        );
+    }
+
     @Test
     public void testInitialize() {
         System.out.println("initialize");
         assertNotNull("Can't construct FXMLController", new FXMLController());
     }
 
-    private void checkSystem() {
-        assumeFalse("Currently this test get's stuck in travis, so skipping it.", Boolean.getBoolean(System.getenv("TRAVIS")));
-    }
-
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println("fx: start");
-        checkSystem();
         Parent sceneRoot = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
         Scene scene = new Scene(sceneRoot, 1024, 768);
         stage.setScene(scene);
@@ -43,7 +47,6 @@ public class FXMLControllerTest extends ApplicationTest {
     @Test
     public void testTabs() {
         System.out.println("fx: tabs");
-        checkSystem();
         //Text
         verifyThat("#tab_setup", isNotNull());
         verifyThat("#tab_god", isNotNull());
@@ -57,7 +60,6 @@ public class FXMLControllerTest extends ApplicationTest {
     @Test
     public void testGameStart() {
         System.out.println("fx: game start");
-        checkSystem();
         //Existance
         verifyThat("#button_start", isNotNull());
         verifyThat("#textfield", isNotNull());
