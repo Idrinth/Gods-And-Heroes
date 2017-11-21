@@ -171,12 +171,23 @@ public class PlayerTest {
     @Test
     public void testGetBelievers() {
         System.out.println("add & getBelievers");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new AutoListGod("Test", new EmptyAlignment());
         assertEquals(0, instance.getBelievers().size());
         instance.getBelievers().add(new EmptyCreature());
         assertEquals(1, instance.getBelievers().size());
         instance.addBeliever();
         assertEquals(2, instance.getBelievers().size());
+    }
+    private class AutoListGod extends Player {
+        public AutoListGod(String name, Alignment alignment) {
+            super(name, alignment);
+        }
+        @Override
+        public void addBeliever() {
+            super.addBeliever();
+            cleanLists();
+        }
+    
     }
     private class EmptyCreature implements Believer,Priest,Hero {
         private final boolean isDead;
@@ -249,6 +260,11 @@ public class PlayerTest {
 
         @Override
         public void addTask(Quest quest) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getAge() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }

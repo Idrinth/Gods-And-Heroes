@@ -86,6 +86,31 @@ public class Philosophy implements Alignment {
     private BigDecimal getPositive(BigDecimal value) {
         return value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value;
     }
+
+    @Override
+    public String toString() {
+        String parts = "";
+        BigDecimal hundred = BigDecimal.valueOf(100);
+        if(creation.compareTo(hundred) >= 0) {
+            parts += "nurturing";
+        } else if(destruction.compareTo(hundred) >= 0) {
+            parts += "challenging";
+        }
+        if(falsehood.compareTo(hundred) >= 0) {
+            parts += " Scoundrel";
+        } else if(honesty.compareTo(hundred) >= 0) {
+            parts += " Knight";
+        } else {
+            parts += " One";
+        }
+        if(individuality.compareTo(hundred) >= 0) {
+            parts += " of the Wild";
+        } else if(collectivism.compareTo(hundred) >= 0) {
+            parts += " of the Order";
+        }
+        return parts.trim();
+    }
+
     public static Alignment getRandom() {
         return new Philosophy(
             BigDecimal.valueOf(Math.random()*1000),

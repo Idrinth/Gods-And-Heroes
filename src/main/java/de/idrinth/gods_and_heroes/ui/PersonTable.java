@@ -18,6 +18,7 @@ abstract public class PersonTable<Q extends Person> extends TableView<Q> {
         setEditable(false);
         addColumn("name");
         addColumn("alignment");
+        addColumn("age");
     }
     public void setItems(God god) {
         super.setItems(getList(god));

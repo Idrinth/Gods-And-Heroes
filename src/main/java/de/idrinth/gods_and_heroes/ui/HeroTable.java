@@ -5,6 +5,10 @@ import de.idrinth.gods_and_heroes.interfaces.Hero;
 import javafx.collections.ObservableList;
 
 public class HeroTable extends PersonTable<Hero> {
+    public HeroTable() {
+        super();
+        addColumn("level");
+    }
     @Override
     protected ObservableList getList(God god) {
         return god.getHeroes();
