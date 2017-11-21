@@ -202,9 +202,14 @@ public class PlayerTest {
             this.isDead = isDead;
             this.isLeaving = isLeaving;
         }
-        
+
         @Override
         public boolean isLeaving() {
+            return isLeaving;
+        }
+
+        @Override
+        public boolean isLeaving(BigDecimal bd) {
             return isLeaving;
         }
 
