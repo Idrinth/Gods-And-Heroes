@@ -109,7 +109,7 @@ public class Player implements God,AttributeList {
         }
         believers.removeIf(new LeavingCheck());
         believers.removeIf(new DeadCheck());
-        believe = believe.add(BigDecimal.valueOf(0.00025).multiply(BigDecimal.valueOf(believers.size())));
+        believe = believe.add(BigDecimal.valueOf(0.025).multiply(BigDecimal.valueOf(believers.size())));
         renown = renown.max(BigDecimal.ZERO);
         believe = believe.max(BigDecimal.ZERO);
         updateAttributes();
