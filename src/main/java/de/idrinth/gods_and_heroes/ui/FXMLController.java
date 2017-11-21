@@ -20,6 +20,9 @@ public class FXMLController implements Initializable {
 
     @FXML
     private TabPane tab;
+    
+    @FXML
+    private AttributeTable attributes;
 
     @FXML
     private void startGame(ActionEvent event) throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -34,6 +37,7 @@ public class FXMLController implements Initializable {
                 ((PersonTable) t.getContent()).setItems(game.getGod());
             }
         }
+        attributes.setItems(game.getAttributeList());
         tab.getSelectionModel().clearAndSelect(1);
     }
 
@@ -52,7 +56,9 @@ public class FXMLController implements Initializable {
     @FXML
     private void proselytizeBeliever(ActionEvent event) {
         event.consume();
-        System.out.println(game.getGod().getName()+" tries to proselytize a believer.");
+        new Thread(()-> {
+            game.getGod().addBeliever();
+        }).start();
     }
 
     @FXML

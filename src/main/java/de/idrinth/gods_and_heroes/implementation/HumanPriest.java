@@ -8,7 +8,7 @@ public class HumanPriest extends HigherServant implements Priest {
     public HumanPriest(God god) {
         super(god);
     }
-    
+
     @Override
     protected BigDecimal getDeathFactor() {
         return BigDecimal.valueOf(0.25);

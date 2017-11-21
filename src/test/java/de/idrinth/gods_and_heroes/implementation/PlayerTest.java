@@ -170,11 +170,13 @@ public class PlayerTest {
 
     @Test
     public void testGetBelievers() {
-        System.out.println("getBelievers");
+        System.out.println("add & getBelievers");
         Player instance = new Player("Test", new EmptyAlignment());
         assertEquals(0, instance.getBelievers().size());
         instance.getBelievers().add(new EmptyCreature());
         assertEquals(1, instance.getBelievers().size());
+        instance.addBeliever();
+        assertEquals(2, instance.getBelievers().size());
     }
     private class EmptyCreature implements Believer,Priest,Hero {
         private final boolean isDead;

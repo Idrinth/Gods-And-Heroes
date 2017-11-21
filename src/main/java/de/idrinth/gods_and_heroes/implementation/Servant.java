@@ -10,8 +10,17 @@ abstract class Servant implements Mortal {
     protected BigDecimal level = BigDecimal.ONE;
     protected BigDecimal age = BigDecimal.ZERO;
     protected boolean isDead = false;
-    protected Alignment alignment = Philosophy.getRandom();
-    protected final String name = NameCreator.generate();
+    protected Alignment alignment;
+    protected final String name;
+
+    public Servant() {
+        this(Philosophy.getRandom(), NameCreator.generate());
+    }
+
+    public Servant(Alignment alignment, String name) {
+        this.alignment = alignment;
+        this.name = name;
+    }
 
     protected abstract BigDecimal getDeathFactor();
 
@@ -45,14 +54,10 @@ abstract class Servant implements Mortal {
         return name;
     }
 
-    protected double getDeathChance() {
-        return divide(age.pow(3), level.multiply(BigDecimal.valueOf(27000000))).doubleValue();
-    }
-
     @Override
     public void processIdle() {
         age = age.add(BigDecimal.ONE);
-        isDead = getDeathChance()>Math.random();
+        isDead = age.compareTo(level.multiply(BigDecimal.valueOf(5000)).add(BigDecimal.valueOf(500000)))>=0;
     }
     protected BigDecimal divide(BigDecimal dividend, BigDecimal divisor) {
         return dividend.divide(divisor, 128, RoundingMode.HALF_UP);
