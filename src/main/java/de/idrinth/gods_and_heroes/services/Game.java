@@ -3,9 +3,10 @@ package de.idrinth.gods_and_heroes.services;
 import de.idrinth.gods_and_heroes.implementation.Philosophy;
 import de.idrinth.gods_and_heroes.implementation.Player;
 import de.idrinth.gods_and_heroes.interfaces.God;
+import de.idrinth.gods_and_heroes.ui.AttributeList;
 
 public class Game implements GameHandler {
-    private final God god;
+    private final Player god;
     private static Scheduler timer;
 
     public Game(String name) {
@@ -32,5 +33,10 @@ public class Game implements GameHandler {
 
     public static void setTimer(Scheduler timerImpl) {
         timer = timerImpl;
+    }
+
+    @Override
+    public AttributeList getAttributeList() {
+        return god;
     }
 }

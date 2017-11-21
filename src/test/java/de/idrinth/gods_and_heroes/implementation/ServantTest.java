@@ -38,7 +38,7 @@ public class ServantTest {
         System.out.println("isDead");
         Servant instance = new MockServant();
         assertFalse(instance.isDead());
-        for(int i=0;i<27000; i++) {
+        for(int i=0;i<505000; i++) {
             instance.processIdle();
         }
         assertTrue(instance.isDead());

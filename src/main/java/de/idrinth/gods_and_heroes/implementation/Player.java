@@ -7,12 +7,17 @@ import de.idrinth.gods_and_heroes.interfaces.Hero;
 import de.idrinth.gods_and_heroes.interfaces.Mortal;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
+import de.idrinth.gods_and_heroes.ui.AttributeItem;
+import de.idrinth.gods_and_heroes.ui.AttributeList;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.function.Predicate;
+import javafx.collections.ModifiableObservableListBase;
 import javafx.collections.ObservableList;
 
-public class Player implements God {
+public class Player implements God,AttributeList {
 
     private final String name;
     private BigDecimal believe = BigDecimal.ZERO;
@@ -24,12 +29,23 @@ public class Player implements God {
     private final ObservableList<Hero> heroes = new ModifiableObservablePersonList<>();
     private final ObservableList<Priest> priests = new ModifiableObservablePersonList<>();
     private final ObservableList<Believer> believers = new ModifiableObservablePersonList<>();
+    private final ObservableList<AttributeItem> attributes = new ObservableAttributeList();
 
     public Player(String name, Alignment alignment) {
         this.name = name;
         this.alignment = alignment;
+        attributes.add(new AttributeItem("Name", name));
+        updateAttributes();
     }
-
+    private void updateAttributes() {
+        attributes.add(new AttributeItem("Believe", believe.toBigInteger()));
+        attributes.add(new AttributeItem("Believers", BigInteger.valueOf(believers.size())));
+        attributes.add(new AttributeItem("Heroes", BigInteger.valueOf(heroes.size())));
+        attributes.add(new AttributeItem("Priests", BigInteger.valueOf(priests.size())));
+        attributes.add(new AttributeItem("Renown", renown.toBigInteger()));
+        attributes.add(new AttributeItem("Souls", souls.toBigInteger()));
+        attributes.add(new AttributeItem("Level", getLevel().toBigInteger()));
+    }
     @Override
     public BigDecimal getBelieve() {
         return believe.setScale(0, RoundingMode.FLOOR);
@@ -90,13 +106,13 @@ public class Player implements God {
         for (Priest priest : priests) {
             believe = believe.subtract(BigDecimal.valueOf(0.1));
             renown = renown.add(priest.getLevel().divide(BigDecimal.valueOf(10000)));
-            //chance to add new believer
         }
         believers.removeIf(new LeavingCheck());
         believers.removeIf(new DeadCheck());
         believe = believe.add(BigDecimal.valueOf(0.00025).multiply(BigDecimal.valueOf(believers.size())));
         renown = renown.max(BigDecimal.ZERO);
         believe = believe.max(BigDecimal.ZERO);
+        updateAttributes();
     }
 
     @Override
@@ -111,6 +127,16 @@ public class Player implements God {
     @Override
     public ObservableList<Believer> getBelievers() {
         return believers;
+    }
+
+    @Override
+    public ObservableList<AttributeItem> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public void addBeliever() {
+        believers.add(new HumanBeliever());
     }
     private class DeadCheck implements Predicate<Mortal> {
         @Override
@@ -128,6 +154,42 @@ public class Player implements God {
         @Override
         public boolean test(Believer t) {
             return t.isLeaving();
+        }
+    }
+    private class ObservableAttributeList extends ModifiableObservableListBase<AttributeItem> {
+        private final HashMap<String, AttributeItem> map = new HashMap<>();
+        private final HashMap<Integer, String> keys = new HashMap<>();
+        @Override
+        public AttributeItem get(int index) {
+            return map.get(keys.get(index));
+        }
+
+        @Override
+        public int size() {
+            return map.size();
+        }
+
+        @Override
+        protected void doAdd(int index, AttributeItem element) {
+            keys.put(index, element.getName());
+            map.put(element.getName(), element);
+        }
+
+        @Override
+        protected AttributeItem doSet(int index, AttributeItem element) {
+            keys.put(index, element.getName());
+            map.put(element.getName(), element);
+            return element;
+        }
+
+        @Override
+        protected AttributeItem doRemove(int index) {
+            AttributeItem element = map.get(keys.get(index));
+            keys.remove(index);
+            if(!keys.containsValue(element.getName())) {
+                map.remove(element.getName());
+            }
+            return element;
         }
     }
 }

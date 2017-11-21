@@ -16,7 +16,7 @@ public class HumanBelieverTest {
             boolean key = instance.isLeaving();
             map.put(key, map.get(key)+1);
         }
-        assertTrue(map.get(true)<300000);
-        assertTrue(map.get(false)<900000);
+        assertTrue(map.get(true)<2400);
+        assertTrue(map.get(false)>900000);
     }
 }
