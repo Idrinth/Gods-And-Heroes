@@ -7,6 +7,8 @@ public interface God extends Individual {
     public BigDecimal getBelieve();
     public ObservableList<Believer> getBelievers();
     public void addBeliever();
+    public void addHero();
+    public void addPriest();
     public BigDecimal getRenown();
     public boolean createWonder(Wonder wonder);
     public ObservableList<Hero> getHeroes();

@@ -39,7 +39,10 @@ abstract class HigherServant extends Servant implements Priest {
             return;
         }
         if(Math.random()<0.001*getLevel().intValue()) {
-            god.getBelievers().add(new HumanBeliever());
+            god.addBeliever();
+        }
+        if(Math.random()<0.1) {
+            addExperience(BigDecimal.ONE);
         }
     }
 }
