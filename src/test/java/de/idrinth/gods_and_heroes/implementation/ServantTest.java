@@ -71,7 +71,7 @@ public class ServantTest {
             instance.processIdle();
         }
         assertTrue(instance.getOAge().compareTo(BigDecimal.valueOf(10001)) == 0);
-        assertEquals(21, instance.getAge());
+        assertEquals(27, instance.getAge());
     }
 
     private class MockServant extends Servant {

@@ -191,7 +191,7 @@ public class Player implements God,AttributeList {
     private class LeavingCheck implements Predicate<Believer> {
         @Override
         public boolean test(Believer t) {
-            return t.isLeaving();
+            return t.isLeaving(renown);
         }
     }
     private class ObservableAttributeList extends ModifiableObservableListBase<AttributeItem> {

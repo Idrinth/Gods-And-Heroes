@@ -10,8 +10,14 @@ public class HumanBeliever extends Servant implements Believer {
     }
 
     @Override
-    public boolean isLeaving() {
+    public boolean isLeaving(BigDecimal renown) {
         BigDecimal ageFactor = divide(BigDecimal.ONE, age.add(BigDecimal.ONE).pow(10));
-        return Math.random() < divide(ageFactor, BigDecimal.valueOf(777)).doubleValue();
+        BigDecimal renownFactor = BigDecimal.valueOf(0.777).multiply(BigDecimal.valueOf(1000).add(renown));
+        return Math.random() < divide(ageFactor, renownFactor).doubleValue();
+    }
+
+    @Override
+    public boolean isLeaving() {
+        return isLeaving(BigDecimal.ZERO);
     }
 }

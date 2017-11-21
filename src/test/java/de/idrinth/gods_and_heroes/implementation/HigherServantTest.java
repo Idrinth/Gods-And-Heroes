@@ -100,7 +100,7 @@ public class HigherServantTest {
 
         @Override
         public void addExperience(BigDecimal experience) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            //ignore
         }
 
         @Override
@@ -179,6 +179,10 @@ public class HigherServantTest {
         public void processIdle() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
+
+        @Override
+        public boolean isLeaving(BigDecimal renown) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 }

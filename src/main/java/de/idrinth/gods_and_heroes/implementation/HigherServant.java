@@ -18,12 +18,16 @@ abstract class HigherServant extends Servant implements Priest {
 
     @Override
     public void addExperience(BigDecimal experience) {
+        BigDecimal lprev = getLevel();
         level = level.add(
             divide(
                 experience,
                 BigDecimal.ONE.add(getLevel().pow(2)).multiply(BigDecimal.valueOf(100))
             )
         );
+        if(getLevel().compareTo(lprev) > 0) {
+            god.addExperience(BigDecimal.ONE);
+        }
     }
     
 
