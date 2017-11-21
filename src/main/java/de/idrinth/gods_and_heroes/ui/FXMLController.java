@@ -48,9 +48,17 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
+    private void createQuest(ActionEvent event) {
+        event.consume();
+        System.out.println(game.getGod().getName()+" tries to create a wonder.");
+    }
+
+    @FXML
     private void begetHero(ActionEvent event) {
         event.consume();
-        System.out.println(game.getGod().getName()+" tries to beget a hero.");
+        new Thread(()-> {
+            game.getGod().addHero();
+        }).start();
     }
 
     @FXML
@@ -64,7 +72,9 @@ public class FXMLController implements Initializable {
     @FXML
     private void consecratePriest(ActionEvent event) {
         event.consume();
-        System.out.println(game.getGod().getName()+" tries to consecrate a priest.");
+        new Thread(()-> {
+            game.getGod().addPriest();
+        }).start();
     }
 
     @Override

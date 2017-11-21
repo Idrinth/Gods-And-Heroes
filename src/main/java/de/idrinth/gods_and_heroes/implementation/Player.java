@@ -5,6 +5,7 @@ import de.idrinth.gods_and_heroes.interfaces.Believer;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import de.idrinth.gods_and_heroes.interfaces.Hero;
 import de.idrinth.gods_and_heroes.interfaces.Mortal;
+import de.idrinth.gods_and_heroes.interfaces.Person;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
 import de.idrinth.gods_and_heroes.ui.AttributeItem;
@@ -32,7 +33,7 @@ public class Player implements God,AttributeList {
     private final ObservableList<Believer> believers = new ModifiableObservablePersonList<>();
     private final ObservableList<AttributeItem> attributes = new ObservableAttributeList();
 
-    private final ConcurrentLinkedQueue<Believer> queue = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<Person> queue = new ConcurrentLinkedQueue<>();
 
     public Player(String name, Alignment alignment) {
         this.name = name;
@@ -139,15 +140,42 @@ public class Player implements God,AttributeList {
     public void addBeliever() {
         queue.add(new HumanBeliever());
     }
+
+    @Override
+    public void addHero() {
+        BigDecimal believeCost = BigDecimal.valueOf(1000).multiply(BigDecimal.valueOf(1.1).pow(heroes.size()));
+        if(believers.size()>0 && believe.compareTo(believeCost) >= 0) {
+            queue.add(new HumanHero(this));
+            believe = believe.subtract(believeCost);
+        }
+    }
+
+    @Override
+    public void addPriest() {
+        BigDecimal believeCost = BigDecimal.valueOf(100).multiply(BigDecimal.valueOf(1.1).pow(priests.size()));
+        if(believers.size()>0 && believe.compareTo(believeCost) >= 0) {
+            queue.add(new HumanPriest(this));
+            believe = believe.subtract(believeCost);
+        }
+    }
+
     protected void cleanLists() {
         priests.removeIf(new DeadCheck());
         heroes.removeIf(new DeadCheck());
         believers.removeIf(new LeavingCheck());
         believers.removeIf(new DeadCheck());
         while(!queue.isEmpty()) {
-            believers.add(queue.poll());
+            Person p = queue.poll();
+            if(Hero.class.isInstance(p)) {
+                heroes.add((Hero) p);
+            } else if(Priest.class.isInstance(p)) {
+                priests.add((Priest) p);
+            } else if(Believer.class.isInstance(p)) {
+                believers.add((Believer) p);
+            }
         }
     }
+
     private class DeadCheck implements Predicate<Mortal> {
         @Override
         public boolean test(Mortal t) {

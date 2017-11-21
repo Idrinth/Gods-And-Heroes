@@ -23,13 +23,16 @@
             </AnchorPane>
         </Tab>
         <Tab text="God" disable="true" fx:id="tab_god">
-          <AnchorPane>
+            <AnchorPane>
                 <children>
                     <AttributeTable layoutX="0" layoutY="0" fx:id="attributes"></AttributeTable>
-                    <Button layoutX="350" layoutY="60" text="Create Wonder" onAction="#createWonder"/>
-                    <Button layoutX="350" layoutY="90" text="Beget Hero" onAction="#begetHero"/>
-                    <Button layoutX="350" layoutY="120" text="Proselytize Believer" onAction="#proselytizeBeliever"/>
-                    <Button layoutX="350" layoutY="150" text="Consecrate Priest" onAction="#consecratePriest"/>
+
+                    <Button layoutX="600" layoutY="75" text="Create Wonder" onAction="#createWonder"/>
+                    <Button layoutX="600" layoutY="225" text="Create Quest" onAction="#createQuest"/>
+
+                    <Button layoutX="350" layoutY="75" text="Beget Hero" onAction="#begetHero"/>
+                    <Button layoutX="350" layoutY="150" text="Proselytize Believer" onAction="#proselytizeBeliever"/>
+                    <Button layoutX="350" layoutY="225" text="Consecrate Priest" onAction="#consecratePriest"/>
                 </children>
             </AnchorPane>
         </Tab>
