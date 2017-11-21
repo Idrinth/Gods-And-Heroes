@@ -63,5 +63,20 @@ public class PhilosophyTest {
         System.out.println("getRandom");
         assertNotNull(Philosophy.getRandom());
     }
-    
+
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        BigDecimal z = BigDecimal.ZERO;
+        assertEquals("One", new Philosophy(z,z,z,z,z,z).toString());
+
+        assertEquals("Knight", new Philosophy(z,z,z,z,z,BigDecimal.valueOf(100)).toString());
+        assertEquals("Scoundrel", new Philosophy(z,z,z,z,BigDecimal.valueOf(100),z).toString());
+
+        assertEquals("One of the Wild", new Philosophy(BigDecimal.valueOf(100),z,z,z,z,z).toString());
+        assertEquals("One of the Order", new Philosophy(z,BigDecimal.valueOf(100),z,z,z,z).toString());
+
+        assertEquals("nurturing One", new Philosophy(z,z,BigDecimal.valueOf(100),z,z,z).toString());
+        assertEquals("challenging One", new Philosophy(z,z,z,BigDecimal.valueOf(100),z,z).toString());
+    }
 }

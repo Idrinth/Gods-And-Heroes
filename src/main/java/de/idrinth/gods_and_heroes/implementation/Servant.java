@@ -53,6 +53,10 @@ abstract class Servant implements Mortal {
     public String getName() {
         return name;
     }
+    @Override
+    public int getAge() {
+        return divide(age,BigDecimal.valueOf(1500)).intValue()+15;
+    }
 
     @Override
     public void processIdle() {

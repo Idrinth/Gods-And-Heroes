@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Predicate;
 import javafx.collections.ModifiableObservableListBase;
 import javafx.collections.ObservableList;
@@ -31,6 +32,8 @@ public class Player implements God,AttributeList {
     private final ObservableList<Believer> believers = new ModifiableObservablePersonList<>();
     private final ObservableList<AttributeItem> attributes = new ObservableAttributeList();
 
+    private final ConcurrentLinkedQueue<Believer> queue = new ConcurrentLinkedQueue<>();
+
     public Player(String name, Alignment alignment) {
         this.name = name;
         this.alignment = alignment;
@@ -38,6 +41,7 @@ public class Player implements God,AttributeList {
         updateAttributes();
     }
     private void updateAttributes() {
+        attributes.add(new AttributeItem("Alignment", alignment.toString()));
         attributes.add(new AttributeItem("Believe", believe.toBigInteger()));
         attributes.add(new AttributeItem("Believers", BigInteger.valueOf(believers.size())));
         attributes.add(new AttributeItem("Heroes", BigInteger.valueOf(heroes.size())));
@@ -95,20 +99,17 @@ public class Player implements God,AttributeList {
 
     @Override
     public void processIdle() {
+        cleanLists();
         believe = believe.add(BigDecimal.valueOf(0.00001).multiply(souls));
         renown = renown.subtract(BigDecimal.valueOf(0.00001));
-        heroes.removeIf(new DeadCheck());
         for (Hero hero : heroes) {
             believe = believe.add(BigDecimal.valueOf(0.001));
             renown = renown.add(hero.getLevel().divide(BigDecimal.valueOf(100)));
         }
-        priests.removeIf(new DeadCheck());
         for (Priest priest : priests) {
             believe = believe.subtract(BigDecimal.valueOf(0.1));
             renown = renown.add(priest.getLevel().divide(BigDecimal.valueOf(10000)));
         }
-        believers.removeIf(new LeavingCheck());
-        believers.removeIf(new DeadCheck());
         believe = believe.add(BigDecimal.valueOf(0.025).multiply(BigDecimal.valueOf(believers.size())));
         renown = renown.max(BigDecimal.ZERO);
         believe = believe.max(BigDecimal.ZERO);
@@ -136,7 +137,16 @@ public class Player implements God,AttributeList {
 
     @Override
     public void addBeliever() {
-        believers.add(new HumanBeliever());
+        queue.add(new HumanBeliever());
+    }
+    protected void cleanLists() {
+        priests.removeIf(new DeadCheck());
+        heroes.removeIf(new DeadCheck());
+        believers.removeIf(new LeavingCheck());
+        believers.removeIf(new DeadCheck());
+        while(!queue.isEmpty()) {
+            believers.add(queue.poll());
+        }
     }
     private class DeadCheck implements Predicate<Mortal> {
         @Override

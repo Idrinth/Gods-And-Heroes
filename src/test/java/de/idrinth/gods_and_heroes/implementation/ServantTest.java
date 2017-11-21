@@ -62,9 +62,16 @@ public class ServantTest {
     public void testProcessIdle() {
         System.out.println("processIdle");
         MockServant instance = new MockServant();
-        assertTrue(instance.getAge().compareTo(BigDecimal.ZERO) == 0);
+        assertTrue(instance.getOAge().compareTo(BigDecimal.ZERO) == 0);
+        assertEquals(15, instance.getAge());
         instance.processIdle();
-        assertTrue(instance.getAge().compareTo(BigDecimal.ONE) == 0);
+        assertTrue(instance.getOAge().compareTo(BigDecimal.ONE) == 0);
+        assertEquals(15, instance.getAge());
+        for(int i=0;i<10000;i++) {
+            instance.processIdle();
+        }
+        assertTrue(instance.getOAge().compareTo(BigDecimal.valueOf(10001)) == 0);
+        assertEquals(21, instance.getAge());
     }
 
     private class MockServant extends Servant {
@@ -72,7 +79,7 @@ public class ServantTest {
         protected BigDecimal getDeathFactor() {
             return BigDecimal.ONE;
         }
-        public BigDecimal getAge() {
+        public BigDecimal getOAge() {
             return age;
         }
         public void setAge(BigDecimal age) {

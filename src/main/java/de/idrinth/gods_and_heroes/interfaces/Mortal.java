@@ -7,4 +7,5 @@ public interface Mortal extends Person {
     public BigDecimal getOnDeathSouls();
     public BigDecimal getOnDeathBelieve();
     public boolean isDead();
+    public int getAge();
 }
