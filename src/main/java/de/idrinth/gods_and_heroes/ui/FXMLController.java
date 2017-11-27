@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 
 public class FXMLController implements Initializable {
     public static GameHandler game;
@@ -33,8 +34,11 @@ public class FXMLController implements Initializable {
         game = new Game(textfield.getText());
         for(Tab t:tab.getTabs()) {
             t.setDisable(!t.isDisable());
-            if(PersonTable.class.isInstance(t.getContent())) {
-                ((PersonTable) t.getContent()).setItems(game.getGod());
+            if(AnchorPane.class.isInstance(t.getContent())) {
+                AnchorPane p = (AnchorPane) t.getContent();
+                if(PersonTable.class.isInstance(p.getChildren().get(0))) {
+                    ((PersonTable) p.getChildren().get(0)).setItems(game.getGod());
+                }
             }
         }
         attributes.setItems(game.getAttributeList());

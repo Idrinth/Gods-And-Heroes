@@ -5,6 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -17,6 +18,7 @@ public class MainApp extends Application {
 
         stage.setTitle("Gods & Heroes");
         stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResource("/icon.png").openStream()));
         stage.show();
     }
     

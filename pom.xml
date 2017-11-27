@@ -167,6 +167,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.github.warmuuh</groupId>
+                <artifactId>libsass-maven-plugin</artifactId>
+                <version>0.2.8-libsass_3.4.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <inputPath>${basedir}/src/main/precompile-styles/</inputPath>
+                            <outputPath>${basedir}/src/main/resources/styles/</outputPath>
+                            <generateSourceMap>false</generateSourceMap>
+                            <outputStyle>compact</outputStyle>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

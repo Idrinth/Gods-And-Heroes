@@ -215,8 +215,7 @@ public class Player implements God,AttributeList {
 
         @Override
         protected AttributeItem doSet(int index, AttributeItem element) {
-            keys.put(index, element.getName());
-            map.put(element.getName(), element);
+            doAdd(index, element);
             return element;
         }
 
