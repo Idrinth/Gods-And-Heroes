@@ -10,6 +10,7 @@
 <?import de.idrinth.gods_and_heroes.ui.HeroTable?>
 <?import de.idrinth.gods_and_heroes.ui.PriestTable?>
 <?import de.idrinth.gods_and_heroes.ui.AttributeTable?>
+<?import de.idrinth.gods_and_heroes.ui.PartingLog?>
 
 <TabPane fx:id="tab" tabClosingPolicy="UNAVAILABLE" prefHeight="768" prefWidth="1024" xmlns:fx="http://javafx.com/fxml" fx:controller="de.idrinth.gods_and_heroes.ui.FXMLController">
     <tabs>
@@ -27,12 +28,14 @@
                 <children>
                     <AttributeTable layoutX="0" layoutY="0" fx:id="attributes"></AttributeTable>
 
-                    <Button layoutX="600" layoutY="75" text="Create Wonder" onAction="#createWonder"/>
-                    <Button layoutX="600" layoutY="225" text="Create Quest" onAction="#createQuest"/>
+                    <Button layoutX="300" layoutY="75" text="Beget Hero" onAction="#begetHero"/>
+                    <Button layoutX="300" layoutY="150" text="Proselytize Believer" onAction="#proselytizeBeliever"/>
+                    <Button layoutX="300" layoutY="225" text="Consecrate Priest" onAction="#consecratePriest"/>
 
-                    <Button layoutX="350" layoutY="75" text="Beget Hero" onAction="#begetHero"/>
-                    <Button layoutX="350" layoutY="150" text="Proselytize Believer" onAction="#proselytizeBeliever"/>
-                    <Button layoutX="350" layoutY="225" text="Consecrate Priest" onAction="#consecratePriest"/>
+                    <Button layoutX="450" layoutY="75" text="Create Wonder" onAction="#createWonder"/>
+                    <Button layoutX="450" layoutY="225" text="Create Quest" onAction="#createQuest"/>
+
+                    <PartingLog layoutX="600" layoutY="0" fx:id="log"/>
                 </children>
             </AnchorPane>
         </Tab>
