@@ -10,6 +10,7 @@ import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
 import de.idrinth.gods_and_heroes.ui.AttributeItem;
 import de.idrinth.gods_and_heroes.ui.AttributeList;
+import de.idrinth.gods_and_heroes.ui.PartingHandler;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -27,6 +28,7 @@ public class Player implements God,AttributeList {
     private BigDecimal level = BigDecimal.ONE;
     private BigDecimal souls = BigDecimal.ONE;
     private final Alignment alignment;
+    private final PartingHandler handler;
 
     private final ObservableList<Hero> heroes = new ModifiableObservablePersonList<>();
     private final ObservableList<Priest> priests = new ModifiableObservablePersonList<>();
@@ -35,10 +37,11 @@ public class Player implements God,AttributeList {
 
     private final ConcurrentLinkedQueue<Person> queue = new ConcurrentLinkedQueue<>();
 
-    public Player(String name, Alignment alignment) {
+    public Player(String name, Alignment alignment, PartingHandler handler) {
         this.name = name;
         this.alignment = alignment;
         attributes.add(new AttributeItem("Name", name));
+        this.handler = handler;
         updateAttributes();
     }
     private void updateAttributes() {
@@ -185,13 +188,18 @@ public class Player implements God,AttributeList {
             believe = believe.add(t.getOnDeathBelieve());
             renown = renown.add(t.getOnDeathRenown());
             souls = souls.add(t.getOnDeathSouls());
+            handler.addDeathCase(t);
             return true;
         }
     }
     private class LeavingCheck implements Predicate<Believer> {
         @Override
         public boolean test(Believer t) {
-            return t.isLeaving(renown);
+            if(!t.isLeaving(renown)) {
+                return false;
+            }
+            handler.addLeaveCase(t);
+            return true;
         }
     }
     private class ObservableAttributeList extends ModifiableObservableListBase<AttributeItem> {

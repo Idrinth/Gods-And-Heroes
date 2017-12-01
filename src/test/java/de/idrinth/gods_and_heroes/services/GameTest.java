@@ -9,7 +9,7 @@ public class GameTest {
     public void testInitialize() {
         System.out.println("startFresh + end");
         Game.setTimer(new TimelessScheduler());
-        Game game = new Game("example");
+        Game game = new Game("example", null);
         assertTrue(God.class.isInstance(game.getGod()));
         assertEquals("example", game.getGod().getName());
     }

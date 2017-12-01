@@ -4,9 +4,11 @@ import de.idrinth.gods_and_heroes.interfaces.Alignment;
 import de.idrinth.gods_and_heroes.interfaces.Believer;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import de.idrinth.gods_and_heroes.interfaces.Hero;
+import de.idrinth.gods_and_heroes.interfaces.Mortal;
 import de.idrinth.gods_and_heroes.interfaces.Priest;
 import de.idrinth.gods_and_heroes.interfaces.Quest;
 import de.idrinth.gods_and_heroes.interfaces.Wonder;
+import de.idrinth.gods_and_heroes.ui.PartingHandler;
 import java.math.BigDecimal;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,14 +17,14 @@ public class PlayerTest {
     @Test
     public void testGetBelieve() {
         System.out.println("getBelieve");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertTrue(BigDecimal.ZERO.compareTo(instance.getBelieve()) == 0);
     }
 
     @Test
     public void testGetRenown() {
         System.out.println("getRenown");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
         assertTrue(instance.createWonder(new EmptyWonder(0,100)));
         assertTrue(BigDecimal.valueOf(100).compareTo(instance.getRenown()) == 0);
@@ -33,7 +35,7 @@ public class PlayerTest {
     @Test
     public void testCreateWonder() {
         System.out.println("getRenown");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance.createWonder(new EmptyWonder(0,100));
         assertTrue(instance.createWonder(new EmptyWonder(0,100)));
         assertFalse(instance.createWonder(new EmptyWonder(10,100)));
@@ -42,7 +44,7 @@ public class PlayerTest {
     @Test
     public void testGetHeroes() {
         System.out.println("getHeroes");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertEquals(0, instance.getHeroes().size());
         instance.getHeroes().add(new EmptyCreature());
         assertEquals(1, instance.getHeroes().size());
@@ -51,7 +53,7 @@ public class PlayerTest {
     @Test
     public void testGetPriests() {
         System.out.println("getPriests");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertEquals(0, instance.getPriests().size());
         instance.getPriests().add(new EmptyCreature());
         assertEquals(1, instance.getPriests().size());
@@ -60,21 +62,21 @@ public class PlayerTest {
     @Test
     public void testGetAlignment() {
         System.out.println("getAlignment");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertTrue(Alignment.class.isInstance(instance.getAlignment()));
     }
 
     @Test
     public void testGetName() {
         System.out.println("getName");
-        assertEquals("Test", new Player("Test", new EmptyAlignment()).getName());
-        assertEquals("Test2", new Player("Test2", new EmptyAlignment()).getName());
+        assertEquals("Test", new Player("Test", new EmptyAlignment(), new PartingHandlerImpl()).getName());
+        assertEquals("Test2", new Player("Test2", new EmptyAlignment(), new PartingHandlerImpl()).getName());
     }
 
     @Test
     public void testGetLevelAndAddExperience() {
         System.out.println("getLevel + addExperience");
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         BigDecimal xp = BigDecimal.valueOf(200);
         assertTrue(BigDecimal.ONE.compareTo(instance.getLevel()) == 0);
         instance.addExperience(xp);
@@ -90,7 +92,7 @@ public class PlayerTest {
     @Test
     public void testProcessIdleDeath() {
         //Hero
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance.getHeroes().add(new EmptyCreature(true));
         assertEquals(1, instance.getHeroes().size());
         instance.processIdle();
@@ -98,7 +100,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.valueOf(3).compareTo(instance.getRenown()) == 0);
         assertEquals(0, instance.getHeroes().size());
         //Believer
-        Player instance2 = new Player("Test", new EmptyAlignment());
+        Player instance2 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance2.getBelievers().add(new EmptyCreature(true));
         assertEquals(1, instance2.getBelievers().size());
         instance2.processIdle();
@@ -106,7 +108,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.valueOf(3).compareTo(instance2.getRenown()) == 0);
         assertEquals(0, instance2.getBelievers().size());
 
-        Player instance4 = new Player("Test", new EmptyAlignment());
+        Player instance4 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance4.getBelievers().add(new EmptyCreature(false, true));
         assertEquals(1, instance4.getBelievers().size());
         instance4.processIdle();
@@ -114,7 +116,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.ZERO.compareTo(instance4.getRenown()) == 0);
         assertEquals(0, instance4.getBelievers().size());
 
-        Player instance3 = new Player("Test", new EmptyAlignment());
+        Player instance3 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance3.getBelievers().add(new EmptyCreature(true, true));
         assertEquals(1, instance3.getBelievers().size());
         instance3.processIdle();
@@ -122,7 +124,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.ZERO.compareTo(instance3.getRenown()) == 0);
         assertEquals(0, instance3.getBelievers().size());
         //Priest
-        Player instance5 = new Player("Test", new EmptyAlignment());
+        Player instance5 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance5.getPriests().add(new EmptyCreature(true));
         assertEquals(1, instance5.getPriests().size());
         instance5.processIdle();
@@ -134,7 +136,7 @@ public class PlayerTest {
     public void testProcessIdle() {
         System.out.println("processIdle");
         //Empty
-        Player instance = new Player("Test", new EmptyAlignment());
+        Player instance = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         assertTrue(BigDecimal.ZERO.compareTo(instance.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
         for(int i=0;i<100000;i++) {
@@ -143,7 +145,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.ONE.compareTo(instance.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance.getRenown()) == 0);
         //Believers
-        Player instance4 = new Player("Test", new EmptyAlignment());
+        Player instance4 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance4.getBelievers().add(new EmptyCreature());
         for(int i=0;i<100000;i++) {
             instance4.processIdle();
@@ -151,7 +153,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.valueOf(2501).compareTo(instance4.getBelieve()) == 0);
         assertTrue(BigDecimal.ZERO.compareTo(instance4.getRenown()) == 0);
         //Heroes
-        Player instance2 = new Player("Test", new EmptyAlignment());
+        Player instance2 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance2.getHeroes().add(new EmptyCreature());
         for(int i=0;i<1000;i++) {
             instance2.processIdle();
@@ -159,7 +161,7 @@ public class PlayerTest {
         assertTrue(BigDecimal.ONE.compareTo(instance2.getBelieve()) == 0);
         assertTrue(BigDecimal.TEN.compareTo(instance2.getRenown()) == 0);
         //Priests
-        Player instance3 = new Player("Test", new EmptyAlignment());
+        Player instance3 = new Player("Test", new EmptyAlignment(), new PartingHandlerImpl());
         instance3.getPriests().add(new EmptyCreature());
         for(int i=0;i<10000;i++) {
             instance3.processIdle();
@@ -180,7 +182,7 @@ public class PlayerTest {
     }
     private class AutoListGod extends Player {
         public AutoListGod(String name, Alignment alignment) {
-            super(name, alignment);
+            super(name, alignment, new PartingHandlerImpl());
         }
         @Override
         public void addBeliever() {
@@ -332,6 +334,18 @@ public class PlayerTest {
         @Override
         public void merge(Alignment alignment) {
             //ignore
+        }
+    }
+    private class PartingHandlerImpl implements PartingHandler {
+
+        @Override
+        public void addDeathCase(Mortal mortal) {
+            //nothing to do
+        }
+
+        @Override
+        public void addLeaveCase(Mortal mortal) {
+            //nothing to do
         }
     }
 }
