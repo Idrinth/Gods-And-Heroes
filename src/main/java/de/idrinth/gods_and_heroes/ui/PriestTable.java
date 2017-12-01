@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 public class PriestTable extends PersonTable<Priest> {
     public PriestTable() {
         super();
-        addColumn("level");
+        addColumn("Level", 0.5);
     }
     @Override
     protected ObservableList getList(God god) {

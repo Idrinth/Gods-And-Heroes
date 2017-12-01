@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 public class HeroTable extends PersonTable<Hero> {
     public HeroTable() {
         super();
-        addColumn("level");
+        addColumn("Level", 0.5);
     }
     @Override
     protected ObservableList getList(God god) {

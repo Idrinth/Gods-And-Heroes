@@ -169,6 +169,7 @@ public class Player implements God,AttributeList {
         believers.removeIf(new DeadCheck());
         while(!queue.isEmpty()) {
             Person p = queue.poll();
+            handler.addJoinCase((Mortal) p);
             if(Hero.class.isInstance(p)) {
                 heroes.add((Hero) p);
             } else if(Priest.class.isInstance(p)) {

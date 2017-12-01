@@ -347,5 +347,10 @@ public class PlayerTest {
         public void addLeaveCase(Mortal mortal) {
             //nothing to do
         }
+
+        @Override
+        public void addJoinCase(Mortal mortal) {
+            //nothing to do
+        }
     }
 }
