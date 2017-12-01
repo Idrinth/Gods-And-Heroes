@@ -5,8 +5,6 @@ import de.idrinth.gods_and_heroes.implementation.Player;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import de.idrinth.gods_and_heroes.ui.AttributeList;
 import de.idrinth.gods_and_heroes.ui.PartingHandler;
-import java.util.TimerTask;
-import javafx.application.Platform;
 
 public class Game implements GameHandler {
     private final Player god;
