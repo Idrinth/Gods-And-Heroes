@@ -23,7 +23,7 @@ public class FXMLControllerTest extends ApplicationTest {
     public static void checkSystem() {
         assumeFalse(
             "Currently this test get's stuck in travis, so skipping it.",
-            System.getenv("TRAVIS") != null && System.getenv("TRAVIS").equals("true")
+            false && System.getenv("TRAVIS") != null && System.getenv("TRAVIS").equals("true")
         );
     }
 
