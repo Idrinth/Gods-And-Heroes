@@ -21,9 +21,12 @@ public class FXMLController implements Initializable {
 
     @FXML
     private TabPane tab;
-    
+
     @FXML
     private AttributeTable attributes;
+
+    @FXML
+    private PartingLog log;
 
     @FXML
     private void startGame(ActionEvent event) throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -31,7 +34,7 @@ public class FXMLController implements Initializable {
         if(textfield.getText().isEmpty()) {
             return;
         }
-        game = new Game(textfield.getText());
+        game = new Game(textfield.getText(), log);
         for(Tab t:tab.getTabs()) {
             t.setDisable(!t.isDisable());
             if(AnchorPane.class.isInstance(t.getContent())) {

@@ -4,13 +4,14 @@ import de.idrinth.gods_and_heroes.implementation.Philosophy;
 import de.idrinth.gods_and_heroes.implementation.Player;
 import de.idrinth.gods_and_heroes.interfaces.God;
 import de.idrinth.gods_and_heroes.ui.AttributeList;
+import de.idrinth.gods_and_heroes.ui.PartingHandler;
 
 public class Game implements GameHandler {
     private final Player god;
     private static Scheduler timer;
 
-    public Game(String name) {
-        this.god = new Player(name, new Philosophy());
+    public Game(String name, PartingHandler handler) {
+        this.god = new Player(name, new Philosophy(), handler);
         getTimer().scheduleAtFixedRate(new TaskHandler(god), 0, 1000);
     }
 
