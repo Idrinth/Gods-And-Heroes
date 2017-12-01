@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assume.assumeFalse;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.framework.junit.ApplicationTest;
@@ -19,14 +17,6 @@ import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class FXMLControllerTest extends ApplicationTest {
-    @BeforeClass
-    public static void checkSystem() {
-        assumeFalse(
-            "Currently this test get's stuck in travis, so skipping it.",
-            false && System.getenv("TRAVIS") != null && System.getenv("TRAVIS").equals("true")
-        );
-    }
-
     @Test
     public void testInitialize() {
         System.out.println("initialize");
