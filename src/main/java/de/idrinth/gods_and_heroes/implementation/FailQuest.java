@@ -12,8 +12,8 @@ public class FailQuest extends AbstractQuest {
     private double chance;
 
     /**
-     * @param renown The renown which the player receives upon completing the quest
-     * @param options The options the player may select
+     * @param renown The renown which the player receives upon completing the quest.
+     * @param options The options the player may select.
      * @param chance {@link FailQuest#chance} 
      */
     public FailQuest(BigDecimal renown, List<Option> options, double chance) {

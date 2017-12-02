@@ -17,8 +17,8 @@ public class SetbackQuest extends AbstractQuest {
     private double chance;
     
     /**
-     * @param renown The renown which the player receives upon completing the quest
-     * @param options The options the player may select
+     * @param renown The renown which the player receives upon completing the quest.
+     * @param options The options the player may select.
      * @param chance {@link SetbackQuest#chance} 
      * @param setbackAmount {@link SetbackQuest#setbackAmount}
      */
@@ -36,7 +36,7 @@ public class SetbackQuest extends AbstractQuest {
     /**
      * @see {@link SetbackQuest#chance} 
      */
-	public double getChance() {
-		return chance;
-	}
+    public double getChance() {
+        return chance;
+    }
 }

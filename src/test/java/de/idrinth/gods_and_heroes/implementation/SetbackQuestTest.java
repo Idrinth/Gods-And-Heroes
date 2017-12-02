@@ -56,7 +56,7 @@ public class SetbackQuestTest {
         SetbackQuest instance = get();
         instance.chooseOption(instance.getOptions().get(0));
         for(int i = 0; i < 10000; ++i) {
-        	instance.addProgress(BigDecimal.ONE);
+            instance.addProgress(BigDecimal.ONE);
         }
         assertFalse(instance.isDone());
     }
