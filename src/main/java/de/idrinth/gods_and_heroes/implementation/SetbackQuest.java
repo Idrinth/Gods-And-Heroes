@@ -24,6 +24,6 @@ public class SetbackQuest extends AbstractQuest {
 
     @Override
     public boolean addProgress(BigDecimal amount) {
-        return (Math.random()*100.0 < chance)? super.addProgress(amount) : super.addProgress(setbackAmount);
+        return (Math.random()*100.0 < chance)? super.addProgress(setbackAmount):super.addProgress(amount);
     }
 }
