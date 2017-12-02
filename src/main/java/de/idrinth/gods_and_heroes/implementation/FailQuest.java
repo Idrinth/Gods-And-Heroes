@@ -7,7 +7,7 @@ import de.idrinth.gods_and_heroes.interfaces.Option;
 
 public class FailQuest extends AbstractQuest {
     /**
-     * The chance between 0.0 (included) and 100.0 (excluded) that positive progress is added to the total progress.
+     * The chance between 0.0 (included) and 100.0 (excluded) that positive progress is added to the total progress when the player attempts to add progress.
      */
     private double chance;
 

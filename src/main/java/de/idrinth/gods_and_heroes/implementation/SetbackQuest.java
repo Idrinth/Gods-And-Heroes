@@ -8,11 +8,11 @@ import de.idrinth.gods_and_heroes.interfaces.Option;
 
 public class SetbackQuest extends AbstractQuest {
     /**
-     * The negative amount of progress which is subtracted from the total quest progress.
+     * The negative amount of progress which is subtracted from the total quest progress when a player's attempt to add progress fails.
      */
     private BigDecimal setbackAmount;
     /**
-     * The chance between 0.0 (included) and 100.0 (excluded) that positive progress is added to the total progress.
+     * The chance between 0.0 (included) and 100.0 (excluded) that positive progress is added to the total progress when the player attempts to add progress.
      */
     private double chance;
     
