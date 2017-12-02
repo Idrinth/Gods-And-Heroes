@@ -22,7 +22,7 @@ public class FailQuest extends AbstractQuest {
 
     @Override
     public boolean addProgress(BigDecimal amount) {
-        if(options.size() != 1 || Math.random()*chance >= chance  ) {
+        if(options.size() != 1 || Math.random()*chance >= chance) {
             return false;
         }
         progress = progress.add(amount);
