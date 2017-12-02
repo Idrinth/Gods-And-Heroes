@@ -22,10 +22,6 @@ public class SetbackQuest extends AbstractQuest {
         	progress.subtract(setbackAmount); 
         	return false;
         }
-        if(options.size() != 1) {
-            return false;
-        }
-        progress = progress.add(amount);
-        return isDone();
+        return super.addProgress(amount);
     }
 }

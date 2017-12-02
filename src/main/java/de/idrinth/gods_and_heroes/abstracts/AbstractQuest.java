@@ -46,7 +46,14 @@ public abstract class AbstractQuest implements Quest {
     public boolean isDone() {
          return progress.compareTo(renown.multiply(BigDecimal.TEN)) >= 0;
     }
+    
 
     @Override
-    public abstract boolean addProgress(BigDecimal amount);
+    public boolean addProgress(BigDecimal amount) {
+        if(options.size() != 1) {
+            return false;
+        }
+        progress = progress.add(amount);
+        return isDone();
+    }
 }
