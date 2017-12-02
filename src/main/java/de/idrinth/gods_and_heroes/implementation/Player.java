@@ -45,14 +45,14 @@ public class Player implements God,AttributeList {
         updateAttributes();
     }
     private void updateAttributes() {
-        attributes.add(new AttributeItem("Alignment", alignment.toString()));
-        attributes.add(new AttributeItem("Believe", believe.toBigInteger()));
-        attributes.add(new AttributeItem("Believers", BigInteger.valueOf(believers.size())));
-        attributes.add(new AttributeItem("Heroes", BigInteger.valueOf(heroes.size())));
-        attributes.add(new AttributeItem("Priests", BigInteger.valueOf(priests.size())));
-        attributes.add(new AttributeItem("Renown", renown.toBigInteger()));
-        attributes.add(new AttributeItem("Souls", souls.toBigInteger()));
-        attributes.add(new AttributeItem("Level", getLevel().toBigInteger()));
+        attributes.add(new AttributeItem("Alignment", alignment.toString(), "How you present yourself to the world."));
+        attributes.add(new AttributeItem("Believe", believe.toBigInteger(), "How much power you have right now.\nProduced by Believers and Heroes, used for godly actions and Priests."));
+        attributes.add(new AttributeItem("Believers", BigInteger.valueOf(believers.size()), "How many people believe in you.\nThey produce Believe and may die of old age or leave if dissatisfied."));
+        attributes.add(new AttributeItem("Heroes", BigInteger.valueOf(heroes.size()), "How many heroes spread the word of you.\nThese may die, but produce renown and believe for you."));
+        attributes.add(new AttributeItem("Priests", BigInteger.valueOf(priests.size()), "How many priests spread your words.\nThese may die and produce more believers and some renown for a bit of believe invested in them."));
+        attributes.add(new AttributeItem("Renown", renown.toBigInteger(), "How well known you are.\nPassively reduces the chance of people leaving, because you are important."));
+        attributes.add(new AttributeItem("Souls", souls.toBigInteger(), "How many of your true believers died for you.\nGenerates a tiny amount of believe for you."));
+        attributes.add(new AttributeItem("Level", getLevel().toBigInteger(), "Your experience.\nThe more you ddo, the better you get."));
     }
     @Override
     public BigDecimal getBelieve() {
