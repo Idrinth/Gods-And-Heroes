@@ -7,7 +7,13 @@ import de.idrinth.gods_and_heroes.abstracts.AbstractQuest;
 import de.idrinth.gods_and_heroes.interfaces.Option;
 
 public class SetbackQuest extends AbstractQuest {
+	/**
+	 * The negative amount of progress which is subtracted from the total quest progress.
+	 */
     private BigDecimal setbackAmount;
+	/**
+	 * The chance that positive progress is added to the total progress.
+	 */
     private double chance;
     
     public SetbackQuest(BigDecimal renown, List<Option> options, double chance, BigDecimal setbackAmount) {
@@ -18,10 +24,6 @@ public class SetbackQuest extends AbstractQuest {
 
     @Override
     public boolean addProgress(BigDecimal amount) {
-        if(Math.random()*chance < chance) { 
-        	progress.subtract(setbackAmount); 
-        	return false;
-        }
-        return super.addProgress(amount);
+        return (Math.random()*100.0 < chance)? super.addProgress(amount) : super.addProgress(setbackAmount);
     }
 }

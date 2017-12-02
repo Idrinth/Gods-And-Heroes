@@ -6,6 +6,9 @@ import de.idrinth.gods_and_heroes.abstracts.AbstractQuest;
 import de.idrinth.gods_and_heroes.interfaces.Option;
 
 public class FailQuest extends AbstractQuest {
+	/**
+	 * The chance that positive progress is added to the total progress.
+	 */
     private double chance;
 
     public FailQuest(BigDecimal renown, List<Option> options, double chance) {
@@ -19,9 +22,6 @@ public class FailQuest extends AbstractQuest {
 
     @Override
     public boolean addProgress(BigDecimal amount) {
-        if(Math.random()*chance >= chance) {
-            return false;
-        }
-        return super.addProgress(amount);
+    	return (Math.random()*100.0 < chance) ? false : super.addProgress(amount);
     }
 }
