@@ -170,7 +170,7 @@
             <plugin>
                 <groupId>com.github.warmuuh</groupId>
                 <artifactId>libsass-maven-plugin</artifactId>
-                <version>0.2.8-libsass_3.4.4</version>
+                <version>0.2.10-libsass_3.5.3</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
